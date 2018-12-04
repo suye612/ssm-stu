@@ -14,7 +14,7 @@
 <div class="div">
 <h2 class="title">登录</h2>
 	<form action="login" method="post" >
-		<p ><input type="text" id="name" name="name" placeholder="请输入姓名" class="aa"></p>
+		<p ><input type="text" id="name" name="username" placeholder="请输入姓名" class="aa"></p>
 		<p><input type="password" id="password" name="password" placeholder="请输入密码" class="aa"></p>
 		<p >
 		<input type="button" id="reg" value="注册" class="reg" onclick="register()"/>&emsp;
@@ -25,7 +25,7 @@
 </body>
 <script>
     function register() {
-        location.href= "/register";
+        location.href= "register";
     }
 </script>
 </html>

@@ -30,3 +30,21 @@
 	background-color: aqua;
 	margin-bottom: -20px;
 }
+.div2{
+	margin: 0 auto;
+	text-align: center;
+	background-color: gray;
+	height: 280px;
+	width: 320px;
+	margin-top: 100px;
+}
+.reg1{
+	height: 30px;
+	width: 280px;
+	background-color: aqua;
+	margin-bottom: -20px;
+}
+.sex{
+	margin-left:-50px;
+	
+}
