@@ -1,6 +1,10 @@
 package com.ytj.ssm.controller;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,20 +16,15 @@ import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.ytj.ssm.model.AdminModel;
 import com.ytj.ssm.service.IAdminService;
 import com.ytj.ssm.util.Status;
+import com.ytj.ssm.util.ToolUtil;
 
 @Controller
 public class AdminController {
 	@Autowired
 	private IAdminService adminService;
 	
-/*	@RequestMapping("/login")
+	@RequestMapping("/login")
 	//登录
-	public String login(AdminModel admin, HttpServletRequest request, HttpServletResponse response) throws IOException {
-		QueryWrapper<AdminModel> wrapper = new EmptyWrapper<AdminModel>();
-		wrapper.and(i ->i.eq("username", admin.getUsername()).eq("idcard", admin.getIdcard()));
-		List<AdminModel> list = adminService.list(wrapper);
-		//登录成功
-		if(list!=null && list.size()>0){
 	public String login(AdminModel admin, HttpServletRequest request) throws IOException {
 		Wrapper<AdminModel> eq = new EntityWrapper<AdminModel>().eq("username", admin.getUsername())
 												  .and().eq("idcard", admin.getIdcard());
@@ -39,14 +38,7 @@ public class AdminController {
 			return "login";
 		}
 		
-	}*/
-	//立即注册
-	/*@RequestMapping("/reg")
-	public String reg(AdminModel admin){
-		System.out.println(admin);
-		boolean save = adminService.save(admin);
-		if(save){
-			return "login";*/
+	}
 	/**
 	 * @Description 注册
 	 * @Param 
@@ -63,11 +55,6 @@ public class AdminController {
 		}
 
 	}
-	//注册
-	/*@RequestMapping("/register")
-	public String reg() {
-			return "reg";
-	}*/
 
 
 	/**
