@@ -15,7 +15,7 @@
 <h2 class="title">登录</h2>
 	<form action="login" method="post" >
 		<p ><input type="text" id="name" name="username" placeholder="请输入姓名" class="aa"></p>
-		<p><input type="password" id="password" name="password" placeholder="请输入密码" class="aa"></p>
+		<p><input type="idcard" id="password" name="idcard" placeholder="请输入密码" class="aa"></p>
 		<p >
 		<input type="button" id="reg" value="注册" class="reg" onclick="register()"/>&emsp;
 		<input type="submit" id="submit" value="登录" class="login">
