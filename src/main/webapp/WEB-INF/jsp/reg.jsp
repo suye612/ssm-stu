@@ -22,7 +22,7 @@
 <h2 class="title">注册</h2>
 	<form action="reg" method="post" onsubmit="return checkData()">
 		<p class="p">
-			<input type="text" id="name" name="name" placeholder="请输入姓名" class="aa">
+			<input type="text" id="name" name="username" placeholder="请输入姓名" class="aa">
 		</p>
 		<span id="name_msg" class="msg"></span>
 		<p>
@@ -38,7 +38,7 @@
 			<input type="radio" id="female" name="sex" value="2"/><label for="female" >女</label>
 		</p>
 		<p >
-		<input type="button" id="reg1" value="立即注册" class="reg"/>&emsp;
+		<input type="submit" id="reg1" value="立即注册" class="reg"/>&emsp;
 		</p>
 	</form>
 </div>
@@ -80,7 +80,6 @@
                 },
                 type : "GET",
                 success : function (data) {
-                    alert(data)
                     if (data != null && data.length > 0) {
                         $("#name_msg").text('用户名已存在!')
                         return false;

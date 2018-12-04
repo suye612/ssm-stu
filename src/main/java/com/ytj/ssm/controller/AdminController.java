@@ -45,7 +45,7 @@ public class AdminController {
 		admin.setStatus(Status.ENABLE);
 		boolean flag = adminService.insert(admin);
 		if(flag){
-			return "login.jsp";
+			return "login";
 		}else{
 			return "reg";
 		}

@@ -25,7 +25,7 @@
 </body>
 <script>
     function register() {
-        location.href= "/register";
+        location.href= "register";
     }
 </script>
 </html>
