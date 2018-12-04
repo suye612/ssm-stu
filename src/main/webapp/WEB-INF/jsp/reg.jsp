@@ -12,17 +12,14 @@
 			color: red;
 			font-size: 12px;
 		}
-		.p {
-
-		}
 	</style>
 </head>
 <body>
 <div class="div2">
 <h2 class="title">注册</h2>
 	<form action="reg" method="post" onsubmit="return checkData()">
-		姓&emsp;名：
 		<p class="p">
+			姓&emsp;&ensp;名：
 			<input type="text" id="name" name="username" placeholder="请输入姓名" class="aa">
 		</p>
 		<span id="name_msg" class="msg"></span>
