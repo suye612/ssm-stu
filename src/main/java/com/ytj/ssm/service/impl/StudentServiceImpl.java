@@ -1,18 +1,17 @@
 package com.ytj.ssm.service.impl;
 
 
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
-
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.ytj.ssm.dao.StudentDao;
 import com.ytj.ssm.model.StudentModel;
 import com.ytj.ssm.service.IStudentService;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 @Service("studentService")
-public class StudentServiceImpl extends ServiceImpl<BaseMapper<StudentModel> , StudentModel> implements IStudentService{
+public class StudentServiceImpl extends ServiceImpl<StudentDao,StudentModel > implements IStudentService{
 	@Resource
 	private StudentDao studentDao;
 
