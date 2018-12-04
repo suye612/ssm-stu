@@ -3,10 +3,10 @@ package com.ytj.ssm.controller;
 import java.io.IOException;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,7 +20,7 @@ import com.ytj.ssm.util.ToolUtil;
 
 @Controller
 public class AdminController {
-	@Autowired
+	@Resource
 	private IAdminService adminService;
 	
 	@RequestMapping("/login")
@@ -40,20 +40,18 @@ public class AdminController {
 		
 	}
 	/**
-	 * @Description 注册
-	 * @Param 
-	 * @return 
+	 *注册
 	 **/
 	@RequestMapping("/reg")
 	public String reg(AdminModel admin){
 		admin.setStatus(Status.ENABLE);
+		System.out.println(admin);
 		boolean flag = adminService.insert(admin);
 		if(flag){
 			return "login";
 		}else{
 			return "reg";
 		}
-
 	}
 	/**
 	 * @return
