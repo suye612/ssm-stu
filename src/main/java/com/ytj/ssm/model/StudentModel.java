@@ -12,10 +12,12 @@ import lombok.Data;
 @TableName("tb_student")
 public class StudentModel extends Model<StudentModel>{
 	@TableId(value = "id", type = IdType.AUTO)
-	private int id;
+	private Integer id;
 	private String name;
+	private String studentNo;
 	private String sex;
-	private int age;
+	private Integer age;
+	private Integer status;
 	private String profession;
 	
 	@Override
