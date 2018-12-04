@@ -51,7 +51,14 @@
 		
 		<!-- 配置类型别名的基础包 -->
 		<property name="typeAliasesPackage" value="com.ytj.ssm.model"/>
-		
+
+		<property name="plugins">
+			<array> <!-- 分页插件配置 -->
+				<bean id="paginationInterceptor" class="com.baomidou.mybatisplus.plugins.PaginationInterceptor">
+					<property name="dialectType" value="mysql"/>
+				</bean>
+			</array>
+		</property>
 	</bean>
 	
 	<!-- 配置mapper代理对象扫描器 -->
