@@ -13,13 +13,13 @@ import lombok.Data;
 public class StudentModel extends Model<StudentModel>{
 	@TableId(value = "id", type = IdType.AUTO)
 	private Integer id;
-	private String name;
 	private String studentNo;
+	private String name;
 	private String sex;
 	private Integer age;
 	private Integer status;
 	private String profession;
-	
+
 	@Override
 	protected Serializable pkVal() {
 		return this.id;
