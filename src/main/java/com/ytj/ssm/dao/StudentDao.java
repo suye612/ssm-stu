@@ -9,7 +9,8 @@ import java.util.List;
 public interface StudentDao extends BaseMapper<StudentModel> {
 	public StudentModel studentByName(@Param("name") String name);
 
-	 Integer queryAllCount(StudentModel student);
+	 Integer queryAllCount(@Param("student")StudentModel student);
 
-	List<StudentModel> queryAll(@Param("page") Integer page, @Param("pageSize") Integer pageSize, StudentModel student);
+	List<StudentModel> queryAll(@Param("page") Integer page, @Param("pageSize") Integer pageSize,
+								@Param("student") StudentModel student);
 }

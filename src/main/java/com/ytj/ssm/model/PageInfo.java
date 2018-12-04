@@ -1,6 +1,7 @@
 package com.ytj.ssm.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,172 +11,119 @@ import java.util.List;
  * @date 2018/12/4
  */
 public class PageInfo<T> implements Serializable {
-    /**
-     * 当前页数
-     **/
-    private int pageNow = 1;
-    /**
-     * 每页显示记录的条数
-     **/
-    private int pageSize = 4;
-    /**
-     * 总的记录条数
-     **/
-    private int totalCount;
-    /**
-     * // 总的页数
-     **/
-    private int totalPageCount;
-    /**
-     * // 开始位置，从0开始
-     **/
-    private int startPos;
-    /**
-     * // 是否有首页
-     **/
-    private boolean hasFirst;
-    /**
-     * // 是否有前一页
-     **/
-    private boolean hasPre;
-    /**
-     * // 是否有下一页
-     **/
-    private boolean hasNext;
-    /**
-     * // 是否有最后一页
-     **/
-    private boolean hasLast;
-
-    /**
-     *  结果集
-     **/
+    private int page;
+    private int pageSize = 5;
+    private int maxCount;
+    private int maxPage;
+    private int start;
+    private Boolean isFirstPage;
+    private Boolean isLastPage;
+    private int nextPage;
+    private int backPage;
     private List<T> list;
+    private List<Integer> nums = new ArrayList<>();
 
-    public List<T> getList() {
-        return list;
+    public PageInfo(int maxCount, Integer page) {
+        this.maxCount = maxCount;
+        this.page = page;
     }
 
-    public void setList(List<T> list) {
-        this.list = list;
+    public int getStart() {
+        return (page - 1)*pageSize;
     }
 
-    /**
-     * 通过构造函数 传入 总记录数 和 当前页
-     *
-     * @param totalCount
-     * @param pageNow
-     */
-    public PageInfo(int totalCount, int pageNow) {
-        this.totalCount = totalCount;
-        this.pageNow = pageNow;
+    public void setStart(int start) {
+        this.start = start;
     }
 
-    /**
-     * 取得总页数，总页数=总记录数/总页数
-     *
-     * @return
-     */
-    public int getTotalPageCount() {
-        totalPageCount = getTotalCount() / getPageSize();
-        return (totalCount % pageSize == 0) ? totalPageCount
-                : totalPageCount + 1;
+    public int getNextPage() {
+        return page+1;
+    }
+    public void setNextPage(int nextPage) {
+        this.nextPage = nextPage;
+    }
+    public int getBackPage() {
+        return page-1;
+    }
+    public void setBackPage(int backPage) {
+        this.backPage = backPage;
     }
 
-    public void setTotalPageCount(int totalPageCount) {
-        this.totalPageCount = totalPageCount;
+    public int getPage() {
+        return page;
     }
-
-    public int getPageNow() {
-        return pageNow;
+    public void setPage(int page) {
+        this.page = page;
     }
-
-    public void setPageNow(int pageNow) {
-        this.pageNow = pageNow;
-    }
-
     public int getPageSize() {
         return pageSize;
     }
-
     public void setPageSize(int pageSize) {
         this.pageSize = pageSize;
     }
-
-    public int getTotalCount() {
-        return totalCount;
+    public int getMaxCount() {
+        return maxCount;
+    }
+    public void setMaxCount(int maxCount) {
+        this.maxCount = maxCount;
+    }
+    public int getMaxPage() {
+        return maxCount%pageSize == 0 ? maxCount/pageSize :maxCount/pageSize+1;
+    }
+    public void setMaxPage(int maxPage) {
+        this.maxPage = maxPage;
     }
 
-    public void setTotalCount(int totalCount) {
-        this.totalCount = totalCount;
-    }
+    public List<T> getList() {
 
-    /**
-     * 取得选择记录的初始位置
-     *
-     * @return
-     */
-    public int getStartPos() {
-        return (pageNow - 1) * pageSize;
+        return list;
     }
-
-    public void setStartPos(int startPos) {
-        this.startPos = startPos;
+    public void setList(List<T> list) {
+        this.list = list;
     }
+    public List<Integer> getNums() {
+        if(getMaxPage()<=5){
+            for(int i=1;i<=getMaxPage();i++){
+                nums.add(i);
+            }
+        }else {
+            if(page<=3){
+                for(int i = 1;i<=5 ; i++){
+                    nums.add(i);
+                }
+            }else if (page>=getMaxPage()-2){
+                for(int i=getMaxPage()-4;i<=getMaxPage();i++){
+                    nums.add(i);
+                }
+            }else{
+                for(int i=page-2;i<=page+2;i++){
+                    nums.add(i);
+                }
+            }
+        }
 
-    /**
-     * 是否是第一页
-     *
-     * @return
-     */
-    public boolean getHasFirst() {
-        return (pageNow == 1) ? false : true;
+        return nums;
     }
-
-    public void setHasFirst(boolean hasFirst) {
-        this.hasFirst = hasFirst;
+    public void setNums(List<Integer> nums) {
+        this.nums = nums;
     }
-
-    /**
-     * 是否有首页
-     *
-     * @return
-     */
-    public boolean getHasPre() {
-        // 如果有首页就有前一页，因为有首页就不是第一页
-        return getHasFirst() ? true : false;
+    public Boolean getIsFirstPage() {
+        if(page==1){
+            return true;
+        }
+        return false;
     }
-
-    public void setHasPre(boolean hasPre) {
-        this.hasPre = hasPre;
+    public void setIsFirstPage(Boolean isFirstPage) {
+        this.isFirstPage = isFirstPage;
     }
-
-    /**
-     * 是否有下一页
-     *
-     * @return
-     */
-    public boolean getHasNext() {
-        // 如果有尾页就有下一页，因为有尾页表明不是最后一页
-        return getHasLast() ? true : false;
+    public Boolean getIsLastPage() {
+        if(getPage()==getMaxPage()){
+            return true;
+        }
+        return false;
     }
-
-    public void setHasNext(boolean hasNext) {
-        this.hasNext = hasNext;
-    }
-
-    /**
-     * 是否有尾页
-     *
-     * @return
-     */
-    public boolean getHasLast() {
-        // 如果不是最后一页就有尾页
-        return (pageNow == getTotalCount()) ? false : true;
-    }
-
-    public void setHasLast(boolean hasLast) {
-        this.hasLast = hasLast;
+    public void setIsLastPage(Boolean isLastPage) {
+        this.isLastPage = isLastPage;
     }
 
 }

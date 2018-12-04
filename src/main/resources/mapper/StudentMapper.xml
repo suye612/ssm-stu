@@ -3,36 +3,38 @@
 <mapper namespace="com.ytj.ssm.dao.StudentDao">
 
 	<sql id="sql_where">
-		<if test="studentNo != null and studentNo !=''">
-			and studentNo like concat('%',#{studentNo},'%')
+		<if test="student.name != null and student.name !=''">
+			and name like concat('%',#{student.name},'%')
 		</if>
-		<if test="name != null and name !=''">
-			and name like concat('%',#{name},'%')
+		<if test="student.studentNo != null and student.studentNo !=''">
+			and studentNo like concat('%',#{student.studentNo},'%')
 		</if>
-		<if test="profession != null and profession !=''">
-			and profession like concat('%',#{profession},'%')
+		<if test="student.profession != null and student.profession !=''">
+			and profession like concat('%',#{student.profession},'%')
 		</if>
-		<if test="sex != null ">
-			and sex = #{sex}
+		<if test="student.sex != null ">
+			and sex = #{student.sex}
 		</if>
-		<if test="age != null ">
-			and age = #{age}
+		<if test="student.age != null ">
+			and age = #{student.age}
 		</if>
 	</sql>
 	<select id="studentByName" parameterType="int" resultType="com.ytj.ssm.model.StudentModel">
 		select * from student where id = 1
 	</select>
 
-	<select id="queryAllCount" resultType="Integer">
-		select count (*) from tb_student
+	<select id="queryAllCount" resultType="Integer" parameterType="com.ytj.ssm.model.StudentModel">
+		select count(1) from tb_student
 		where status = 1
 		<include refid="sql_where"></include>
 	</select>
 	<select id="queryAll" resultType="com.ytj.ssm.model.StudentModel">
 		select * from tb_student
-		where status = 1
+		<where>
+		status = 1
 		<include refid="sql_where"></include>
-		limit page,pageSize
+		</where>
+		limit #{page},#{pageSize}
 	</select>
 
 </mapper>

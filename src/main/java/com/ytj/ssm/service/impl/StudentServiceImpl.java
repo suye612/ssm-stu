@@ -26,7 +26,8 @@ public class StudentServiceImpl extends ServiceImpl<StudentDao,StudentModel > im
 		//总记录数
 		int totalCount = baseMapper.queryAllCount(student);
 		PageInfo<StudentModel> pageInfo = new PageInfo(totalCount, page);
-		List<StudentModel> list =  baseMapper.queryAll(pageInfo.getStartPos(), pageSize, student);
+		pageInfo.setPageSize(pageSize);
+		List<StudentModel> list =  baseMapper.queryAll(pageInfo.getStart(), pageSize, student);
 		pageInfo.setList(list);
 		return pageInfo ;
 	}

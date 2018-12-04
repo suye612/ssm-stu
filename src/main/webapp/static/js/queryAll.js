@@ -1,28 +1,30 @@
 $(function(){
+
 	queryAll(1,5);
 })
 
-function queryAll(){
+function queryAll(page,count){
 $.ajax({
-		url :"queryAll",
-		type : "post",
+		url :"/queryAll",
+		type : "get",
 		data :
 		{
 			"page" : page,
-			"count" : count,
+			"pageSize" : count
 		},
 		dataType : "json",
 		success : function(data){
+			var list = data.list;
 			$("#page").val(data.page);//将当前页面存在隐藏域中
 			$("#t1 tr").remove();
-			for (var i = 0; i < data.List.length; i++) {
+			for (var i = 0; i < list.length; i++) {
 				var tr = $("<tr>" +
 						"<td><input type='checkbox' name='checkbox'/></td>" +
-						"<td>"+data.List[i].studentNo+"</td>" +
-						"<td>"+data.List[i].name+"</td>" +
-						"<td>"+data.List[i].sex+"</td>" +
-						"<td>"+data.List[i].age+"</td>" +
-						"<td>"+data.List[i].profession+"</td>" +
+						"<td>"+list[i].studentNo +"</td>" +
+						"<td>"+list[i].name +"</td>" +
+						"<td>"+list[i].sex +"</td>" +
+						"<td>"+list[i].age +"</td>" +
+						"<td>"+list[i].profession +"</td>" +
 						"<td><input type='button' onclick='delStuden(this)' value='删除'>" +
 						"<input type='button' onclick='editStuden(this)' value='编辑'>" +
 						"<input type='button' onclick='detailStuden(this)' value='详情'>" +

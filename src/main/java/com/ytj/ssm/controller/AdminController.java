@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.ytj.ssm.util.Exception.AppException;
+import com.ytj.ssm.util.Exception.BizExceptionEnum;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,8 +29,6 @@ public class AdminController {
 	@RequestMapping("/login")
 	//登录
 	public String login(AdminModel admin, HttpServletRequest request,HttpServletResponse response) throws IOException {
-		
-		System.out.println("登录界面");
 		Wrapper<AdminModel> eq = new EntityWrapper<AdminModel>().eq("username", admin.getUsername())
 												  .and().eq("idcard", admin.getIdcard());
 		AdminModel adminModel = adminService.selectOne(eq);
@@ -36,7 +36,7 @@ public class AdminController {
 			HttpSession session = request.getSession();
 			session.setAttribute("admin",adminModel);
 			System.out.println(11111);
-			return "queryAll";
+			return "main";
 		}else{
 		//登录失败
 			 response.sendRedirect("index.jsp");
@@ -56,9 +56,8 @@ public class AdminController {
 		if(flag){
 		//	return "index";
 			 response.sendRedirect("index.jsp");
-					
 		}else{
-			return "reg";
+			throw new AppException(BizExceptionEnum.REGISTER_ERROR);
 		}
 		return null;
 	}
