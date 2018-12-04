@@ -13,10 +13,12 @@ import lombok.Data;
 public class StudentModel extends Model<StudentModel>{
 	@TableId(value = "id", type = IdType.AUTO)
 	private int id;
+	private String studentNo;
 	private String name;
 	private String sex;
 	private int age;
 	private String profession;
+	private Integer status;
 	
 	@Override
 	protected Serializable pkVal() {
