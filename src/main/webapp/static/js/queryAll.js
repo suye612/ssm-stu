@@ -1,5 +1,4 @@
 $(function(){
-
 	queryAll(1,5);
 })
 
