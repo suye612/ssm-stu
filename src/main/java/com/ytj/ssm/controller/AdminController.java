@@ -45,7 +45,6 @@ public class AdminController {
 		}else{
 		//登录失败
 			throw new AppException(BizExceptionEnum.LONGIN_ERROR);
-			 //response.sendRedirect("index.jsp");
 		}
 	}
 	/**

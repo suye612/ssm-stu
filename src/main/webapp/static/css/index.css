@@ -48,3 +48,21 @@
 	margin-left:-50px;
 	
 }
+.show{
+	height: 15px;
+	width: 70px;
+}
+.showSelect{
+	height: 20px;
+	width: 50px;
+}
+.table{
+	margin-top: 20px;
+	width: 690px;
+}
+.main{
+	width: 690px;
+	text-align: center;
+	margin: 0 auto;
+	margin-top: 100px;
+}

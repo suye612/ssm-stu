@@ -53,6 +53,7 @@ public class StudentController {
 		studentModel.setStatus(Status.ENABLE);
 		String stuNo = getStudentNo();
 		studentModel.setStudentNo(stuNo);
+		System.out.println(studentModel);
 		boolean flag = studentService.insert(studentModel);
 		if (flag) {
 			return BizExceptionEnum.SUCCESS_TIP;
@@ -114,7 +115,7 @@ public class StudentController {
 	 * @return 
 	 **/
 	public String getStudentNo(){
-		StringBuffer stuNo = null;
+		StringBuffer stuNo = new StringBuffer();
 		stuNo.append(DateUtil.formatDate(new Date(), "yyyy"));
 		return String.valueOf(stuNo);
 	}

@@ -12,9 +12,11 @@ function getSeleteData() {
 }
 function queryAll(page,count){
     var data = getSeleteData();
-    var formData = JSON.stringify(data)
+    //JSON.parse()【从一个字符串中解析出json对象】
+    //JSON.stringify()【从一个对象中解析出字符串】
+    var formData = JSON.stringify(data);
 	$.ajax({
-		url :"/queryAll",
+		url :"queryAll",
 		type : "get",
 		data :
 		{
@@ -35,8 +37,8 @@ function queryAll(page,count){
 						"<td>"+list[i].sex +"</td>" +
 						"<td>"+list[i].age +"</td>" +
 						"<td>"+list[i].profession +"</td>" +
-						"<td><input type='button' onclick='delStuden(this)' value='删除'>" +
-						"<input type='button' onclick='editStuden(this)' value='编辑'>" +
+						"<td><input type='button' onclick='delStuden(this)' value='删除'>&emsp;" +
+						"<input type='button' onclick='editStuden(this)' value='编辑'>&emsp;" +
 						"<input type='button' onclick='detailStuden(this)' value='详情'>" +
 						"</td>" +
 						"</tr>")
@@ -48,8 +50,9 @@ function queryAll(page,count){
 function save() {
     var data = getSeleteData();
     var formData = JSON.stringify(data);
+    alert(formData)
     $.ajax({
-		url : '/insertStudent',
+		url : 'insertStudent',
 		type : 'POST',
 		data : formData,
 		success : function (data) {
