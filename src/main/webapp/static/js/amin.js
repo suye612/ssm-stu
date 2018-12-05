@@ -2,7 +2,7 @@ var Amin = {
     alert: function (info, iconIndex) {
         parent.layer.msg(info, {
             icon: iconIndex,
-            time: 1500
+            time: 2000
         });
     },
     confirm: function (tip, ensure) {//询问框
