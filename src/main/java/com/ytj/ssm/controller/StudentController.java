@@ -5,11 +5,13 @@ import java.util.Date;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONObject;
 import com.ytj.ssm.model.PageInfo;
 import com.ytj.ssm.model.StudentModel;
 import com.ytj.ssm.service.IStudentService;
@@ -37,7 +39,9 @@ public class StudentController {
 	 **/
 	@RequestMapping(value = "/queryAll",method = RequestMethod.GET)
 	@ResponseBody
-	public PageInfo<StudentModel> queryAll(@RequestParam(value = "page" ,defaultValue = "1") Integer page, Integer pageSize,  StudentModel student) {
+	public PageInfo<StudentModel> queryAll(@RequestParam(value = "page" ,defaultValue = "1") Integer page,
+										   Integer pageSize,  @RequestBody JSONObject studentModel) {
+		StudentModel student = JSONObject.toJavaObject(studentModel, StudentModel.class);
 		//查询全部
 		PageInfo<StudentModel>  pageInfo = studentService.queryAll(page,pageSize,student);
 		return 	pageInfo;
@@ -49,7 +53,8 @@ public class StudentController {
 	 **/
 	@RequestMapping(value = "/insertStudent",method = RequestMethod.POST)
 	@ResponseBody
-	public Object insertStudent(StudentModel studentModel){
+	public Object insertStudent(@RequestBody JSONObject data){
+		StudentModel studentModel = JSONObject.toJavaObject(data, StudentModel.class);
 		studentModel.setStatus(Status.ENABLE);
 		String stuNo = getStudentNo();
 		studentModel.setStudentNo(stuNo);
@@ -78,7 +83,8 @@ public class StudentController {
 	 **/
 	@RequestMapping("/updateStudent")
 	@ResponseBody
-	public Object updateStudent(StudentModel studentModel){
+	public Object updateStudent(@RequestBody JSONObject data){
+		StudentModel studentModel = JSONObject.toJavaObject(data, StudentModel.class);
 		if (ToolUtil.isOneEmpty(studentModel,studentModel.getId())) {
 			throw new AppException(BizExceptionEnum.REQUEST_ERROR);
 		}
