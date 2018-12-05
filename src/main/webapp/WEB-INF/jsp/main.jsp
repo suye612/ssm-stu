@@ -9,13 +9,22 @@
 	<script type="application/javascript"  src="static/js/queryAll.js"></script>
 </head>
 <body>
-<input type="text" id="id" name="id" value="学号"/>
-<input type="text" id="name" name="name" value="姓名"/>
-<input type="text" id="sex" name="sex" value="性别"/>
-<input type="text" id="age" name="age" value="年龄"/>
-<input type="text" id="profession" name="profession" value="专业"/>
-<input type="button" onclick="queryAll()" value="查询" id="query"/>
-<input type="button" onclick="add()" value="增加" id="add"/>
+    <input type="hidden" id="id" name="id" value=""/>
+    <label>序号:&ensp;</label>
+    <input type="text" id="studentNo" name="studentNo" value=""/>
+    <label>姓名:&ensp;</label>
+    <input type="text" id="name" name="name" value=""/>
+    <label for="sex">性别:&ensp;</label>
+    <select id="sex" style="width: 160px">
+        <option value="1">男</option>
+        <option value="2">女</option>
+    </select>
+    <label>年龄:&ensp;</label>
+    <input type="text" id="age" name="age" value=""/>
+    <label>专业:&ensp;</label>
+    <input type="text" id="profession" name="profession" value=""/>&ensp;
+    <input type="button" onclick="queryAll()" value="查询" id="query"/>&ensp;
+    <input type="button" onclick="save()" value="增加" id="add"/>
 <table border=1>
     <thead>
     <tr>

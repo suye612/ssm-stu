@@ -1,16 +1,27 @@
 $(function(){
 	queryAll(1,5);
 })
-
+function getSeleteData() {
+	var student = {};
+    student.studentNo = $("#studentNo").val();
+    student.name = $("#name").val();
+    student.sex = $("#sex option:selected").val();
+    student.age = Number($("#age").val());
+    student.profession = $("#profession").val();
+    return student;
+}
 function queryAll(page,count){
-$.ajax({
+    var data = getSeleteData();
+    var formData = JSON.stringify(data)
+	$.ajax({
 		url :"/queryAll",
 		type : "get",
 		data :
 		{
-			"page" : page,
-			"pageSize" : count
-		},
+			page : page,
+			pageSize : count,
+            student : formData
+        },
 		dataType : "json",
 		success : function(data){
 			var list = data.list;
@@ -32,5 +43,21 @@ $.ajax({
 				$("#t1").append(tr);
 			}
 		}
+	})
+}
+function save() {
+    var data = getSeleteData();
+    var formData = JSON.stringify(data);
+    $.ajax({
+		url : '/insertStudent',
+		type : 'POST',
+		data : formData,
+		success : function (data) {
+			Amin.success(data.message)
+        },
+        error : function (data) {
+            Amin.error(data.responseJSON.message );
+        }
+		
 	})
 }
