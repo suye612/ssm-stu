@@ -54,6 +54,7 @@ function save() {
     $.ajax({
 		url : 'insertStudent',
 		type : 'POST',
+		processData : false,  //必须false才会避开jQuery对 formdata 的默认处理   
 		data : formData,
 		success : function (data) {
 			Amin.success(data.message)

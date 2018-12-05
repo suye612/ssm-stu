@@ -23,11 +23,14 @@
 		select * from student where id = 1
 	</select>
 
+	<!--查询总行数  -->
 	<select id="queryAllCount" resultType="Integer" parameterType="com.ytj.ssm.model.StudentModel">
 		select count(1) from tb_student
 		where status = 1
 		<include refid="sql_where"></include>
 	</select>
+	
+	<!--查询所有  -->
 	<select id="queryAll" resultType="com.ytj.ssm.model.StudentModel">
 		select * from tb_student
 		<where>
