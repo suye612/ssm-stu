@@ -6,6 +6,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Insert title here</title>
 	<script type="application/javascript" src="static/js/jquery-3.3.1.js"></script>
+	<script type="application/javascript"  src="static/js/layer/layer.js"></script>
+	<script type="application/javascript"  src="static/js/amin.js"></script>
 	<script type="application/javascript"  src="static/js/queryAll.js"></script>
 </head>
 <body>
@@ -16,6 +18,7 @@
     <input type="text" id="name" name="name" value=""/>
     <label for="sex">性别:&ensp;</label>
     <select id="sex" style="width: 160px">
+        <option value="0">---请选择性别---</option>
         <option value="1">男</option>
         <option value="2">女</option>
     </select>
@@ -24,7 +27,7 @@
     <label>专业:&ensp;</label>
     <input type="text" id="profession" name="profession" value=""/>&ensp;
     <input type="button" onclick="queryAll()" value="查询" id="query"/>&ensp;
-    <input type="button" onclick="save()" value="增加" id="add"/>
+    <input type="button" onclick="saveOrUpdate()" value="增加" id="add"/>
 <table border=1>
     <thead>
     <tr>

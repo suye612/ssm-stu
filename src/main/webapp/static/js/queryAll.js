@@ -1,6 +1,37 @@
 $(function(){
+    initData()
 	queryAll(1,5);
 })
+
+/**
+ * 初始化文本框数据
+ */
+function initData() {
+    //清空文本框
+            $("#id").val("");
+            $("#studentNo").val("");
+            $("#name").val("");
+            $("#sex option:selected").val("0")
+           /* $("#sex option").each(function (i,e) {
+                if ($(e).val() == 0) {
+                    $(this).attr('selected','selected')
+                }
+            })*/
+            $("#age").val("");
+            $("#profession").val("");
+}
+/**
+ * 刷新表格
+ */
+function refresh() {
+    var page = $("#page").val();
+    count  = 5;
+    queryAll(page,count);
+}
+
+/**
+ * 收集文本框数据
+ */
 function getSeleteData() {
 	var student = {};
     student.studentNo = $("#studentNo").val();
@@ -10,9 +41,17 @@ function getSeleteData() {
     student.profession = $("#profession").val();
     return student;
 }
+
+/**
+ * 查询全部数据
+ * @param page
+ * @param count
+ */
 function queryAll(page,count){
+	var page = $("#page").val();
+    count  = 5;
     var data = getSeleteData();
-    var formData = JSON.stringify(data)
+   // var formData = JSON.stringify(data)
 	$.ajax({
 		url :"/queryAll",
 		type : "get",
@@ -20,7 +59,7 @@ function queryAll(page,count){
 		{
 			page : page,
 			pageSize : count,
-            student : formData
+            student : data
         },
 		dataType : "json",
 		success : function(data){
@@ -29,15 +68,15 @@ function queryAll(page,count){
 			$("#t1 tr").remove();
 			for (var i = 0; i < list.length; i++) {
 				var tr = $("<tr>" +
-						"<td><input type='checkbox' name='checkbox'/></td>" +
+						"<td><input type='checkbox' name='checkbox' /></td>" +
 						"<td>"+list[i].studentNo +"</td>" +
 						"<td>"+list[i].name +"</td>" +
 						"<td>"+list[i].sex +"</td>" +
 						"<td>"+list[i].age +"</td>" +
 						"<td>"+list[i].profession +"</td>" +
-						"<td><input type='button' onclick='delStuden(this)' value='删除'>" +
-						"<input type='button' onclick='editStuden(this)' value='编辑'>" +
-						"<input type='button' onclick='detailStuden(this)' value='详情'>" +
+						"<td><input type='button' onclick='delStudent(this)' value='删除' stuId = "+ list[i].id+" >" +
+						"<input type='button' onclick='getStudent(this)' value='编辑' stuId = " + list[i].id+ ">" +
+						"<input type='button' onclick='detailStuden(this)' value='详情' stuId = "+ list[i].id+">" +
 						"</td>" +
 						"</tr>")
 				$("#t1").append(tr);
@@ -45,19 +84,115 @@ function queryAll(page,count){
 		}
 	})
 }
+
+/**
+ * 判断是新增还是修改
+ */
+function saveOrUpdate() {
+    var id = $("#id").val();
+    if (id == null || id == '') {
+        save();
+    } else {
+    	update(id);
+    }
+}
+/**
+ * 新增学生
+ */
 function save() {
     var data = getSeleteData();
-    var formData = JSON.stringify(data);
+    //var formData = JSON.stringify(data);
     $.ajax({
 		url : '/insertStudent',
 		type : 'POST',
-		data : formData,
+		data : {
+            studentModel : data
+		},
 		success : function (data) {
-			Amin.success(data.message)
+			Amin.success("新增成功!");
+			initData();
+            refresh();
         },
         error : function (data) {
-            Amin.error(data.responseJSON.message );
+            Amin.error("添加失败!");
         }
-		
 	})
+}
+/**
+ *获取学生信息 并回填
+ */
+function getStudent(obj) {
+	var id = $(obj).attr("stuId");
+	$.ajax({
+		url : 'getStudent',
+		type : 'GET',
+		data : {
+			id : id
+		},
+		success : function (data) {
+            //赋值
+            $("#id").val(data.id);
+            $("#studentNo").val(data.studentNo);
+            $("#name").val(data.name);
+            $("#sex option").each(function (i,e) {
+                $(this).attr('selected',false)
+                if ($(e).val() == data.sex) {
+                    $(this).attr('selected','selected')
+                }
+            })
+            $("#age").val(data.age);
+            $("#profession").val(data.profession);
+
+            $("#add").val("修改")
+        },
+		error : function (data) {
+			Amin.error("数据异常!")
+        }
+	})
+}
+
+/***
+ * 新增学生
+ * @param id
+ */
+function update(id) {
+    var data = getSeleteData();
+    data.id = id;
+    $.ajax({
+        url : '/updateStudent',
+        type : 'POST',
+        data : {
+            studentModel : data
+        },
+        success : function (data) {
+            Amin.success("修改成功!");
+            initData();
+            refresh();
+        },
+        error : function (data) {
+            Amin.error("修改失败!");
+        }
+    })
+}
+
+/**
+ * 删除学生
+ */
+function delStudent(obj) {
+    var id = $(obj).attr("stuId");
+    $.ajax({
+        url : '/deleteStudent',
+        type : 'GET',
+        data : {
+            id : id
+        },
+		success : function (data) {
+            Amin.success("删除成功!");
+            initData();
+            refresh();
+        },
+        error : function (data) {
+            Amin.error("删除失败!");
+        }
+    })
 }

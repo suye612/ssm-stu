@@ -37,7 +37,7 @@ public class StudentController {
 	 **/
 	@RequestMapping(value = "/queryAll",method = RequestMethod.GET)
 	@ResponseBody
-	public PageInfo<StudentModel> queryAll(@RequestParam(value = "page" ,defaultValue = "1") Integer page, Integer pageSize, StudentModel student) {
+	public PageInfo<StudentModel> queryAll(@RequestParam(value = "page" ,defaultValue = "1") Integer page, Integer pageSize,  StudentModel student) {
 		//查询全部
 		PageInfo<StudentModel>  pageInfo = studentService.queryAll(page,pageSize,student);
 		return 	pageInfo;
@@ -114,8 +114,8 @@ public class StudentController {
 	 * @return 
 	 **/
 	public String getStudentNo(){
-		StringBuffer stuNo = null;
-		stuNo.append(DateUtil.formatDate(new Date(), "yyyy"));
-		return String.valueOf(stuNo);
+		String stuNo = null;
+		stuNo = DateUtil.formatDate(new Date(), "yyyy");
+		return stuNo;
 	}
 }
