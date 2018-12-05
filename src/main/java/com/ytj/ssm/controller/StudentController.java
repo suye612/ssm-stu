@@ -47,7 +47,7 @@ public class StudentController {
 	 * @Param 
 	 * @return 
 	 **/
-	@RequestMapping("/insertStudent")
+	@RequestMapping(value = "/insertStudent",method = RequestMethod.POST)
 	@ResponseBody
 	public Object insertStudent(StudentModel studentModel){
 		studentModel.setStatus(Status.ENABLE);
