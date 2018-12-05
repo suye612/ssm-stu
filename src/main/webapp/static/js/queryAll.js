@@ -12,11 +12,6 @@ function initData() {
             $("#studentNo").val("");
             $("#name").val("");
             $("#sex option:selected").val("0")
-           /* $("#sex option").each(function (i,e) {
-                if ($(e).val() == 0) {
-                    $(this).attr('selected','selected')
-                }
-            })*/
             $("#age").val("");
             $("#profession").val("");
 }
@@ -25,7 +20,7 @@ function initData() {
  */
 function refresh() {
     var page = $("#page").val();
-    count  = 5;
+    var count  = 5;
     queryAll(page,count);
 }
 
@@ -51,9 +46,11 @@ function queryAll(page,count){
 	var page = $("#page").val();
     count  = 5;
     var data = getSeleteData();
-   // var formData = JSON.stringify(data)
+    //JSON.parse()【从一个字符串中解析出json对象】
+    //JSON.stringify()【从一个对象中解析出字符串】
+    var formData = JSON.stringify(data);
 	$.ajax({
-		url :"/queryAll",
+		url :"queryAll",
 		type : "get",
 		data :
 		{
@@ -74,8 +71,8 @@ function queryAll(page,count){
 						"<td>"+list[i].sex +"</td>" +
 						"<td>"+list[i].age +"</td>" +
 						"<td>"+list[i].profession +"</td>" +
-						"<td><input type='button' onclick='delStudent(this)' value='删除' stuId = "+ list[i].id+" >" +
-						"<input type='button' onclick='getStudent(this)' value='编辑' stuId = " + list[i].id+ ">" +
+						"<td><input type='button' onclick='delStudent(this)' value='删除' stuId = "+ list[i].id+" >&emsp;" +
+						"<input type='button' onclick='getStudent(this)' value='编辑' stuId = " + list[i].id+ ">&emsp;" +
 						"<input type='button' onclick='detailStuden(this)' value='详情' stuId = "+ list[i].id+">" +
 						"</td>" +
 						"</tr>")
@@ -102,8 +99,9 @@ function saveOrUpdate() {
 function save() {
     var data = getSeleteData();
     //var formData = JSON.stringify(data);
+    var formData = JSON.stringify(data);
     $.ajax({
-		url : '/insertStudent',
+		url : 'insertStudent',
 		type : 'POST',
 		data : {
             studentModel : data
