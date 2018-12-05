@@ -11,7 +11,7 @@ admin-logs/
 .springBeans
 .classpath
 src/main/resources/rebel.xml
-src/main/resources/jdbc1.properties
+src/main/resources/jdbc.properties
 *.iml
 src/main/java/*.sql
 *.md
