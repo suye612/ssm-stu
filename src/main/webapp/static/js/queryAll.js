@@ -1,6 +1,21 @@
 $(function(){
     initData()
 	queryAll(1,5);
+    $("tbody tr").mouseover(function(){
+		$(this).css("background-color","aqua");
+	});
+	$("tbody tr").mouseout(function(){
+		$(this).css("background-color","white");
+	});
+	$("tbody tr").click(function(){
+		var box = $(this).find("input")[0];
+		if(box.checked){
+			box.checked=false;
+		}else{
+			box.checked=true;
+		}
+		selectOne();
+	});
 })
 
 /**
@@ -65,7 +80,7 @@ function queryAll(page,count){
 			$("#t1 tr").remove();
 			for (var i = 0; i < list.length; i++) {
 				var tr = $("<tr>" +
-						"<td><input type='checkbox' name='checkbox' /></td>" +
+						"<td><input type='checkbox' name='checkbox' id='all'/></td>" +
 						"<td>"+list[i].studentNo +"</td>" +
 						"<td>"+list[i].name +"</td>" +
 						"<td>"+list[i].sex +"</td>" +
@@ -98,20 +113,21 @@ function saveOrUpdate() {
  */
 function save() {
     var data = getSeleteData();
-    //var formData = JSON.stringify(data);
     var formData = JSON.stringify(data);
     $.ajax({
 		url : 'insertStudent',
 		type : 'POST',
-		processData : false,  //必须false才会避开jQuery对 formdata 的默认处理   
-		data : formData,
 		data : {
-            studentModel : data
+            studentModel : formData
 		},
+		headers:{
+			formData:1
+		},
+		 dataType : "json",
 		success : function (data) {
 			Amin.success("新增成功!");
 			initData();
-            refresh();
+			refresh();
         },
         error : function (data) {
             Amin.error("添加失败!");
@@ -152,18 +168,20 @@ function getStudent(obj) {
 }
 
 /***
- * 新增学生
+ * 更改学生信息
  * @param id
  */
 function update(id) {
     var data = getSeleteData();
+    var formData = JSON.stringify(data);
     data.id = id;
     $.ajax({
-        url : '/updateStudent',
+        url : 'updateStudent',
         type : 'POST',
         data : {
             studentModel : data
         },
+        dataType : "json",
         success : function (data) {
             Amin.success("修改成功!");
             initData();
@@ -181,7 +199,7 @@ function update(id) {
 function delStudent(obj) {
     var id = $(obj).attr("stuId");
     $.ajax({
-        url : '/deleteStudent',
+        url : 'deleteStudent',
         type : 'GET',
         data : {
             id : id
@@ -195,4 +213,20 @@ function delStudent(obj) {
             Amin.error("删除失败!");
         }
     })
+}
+
+//复选框全选
+function selectAll(){
+	var id_box = $(":checkbox[name='ids']");
+	var all_box = $("#all")[0];
+	$.each(id_box, function(index, box){
+		box.checked = all_box.checked;
+	});
+}
+function selectOne(){
+	var id_box = $(":checkbox[name='checkbox']");
+	var id_box_checked = $(":checkbox[name='checkbox']:checked");
+	var all_box = $("#all")[0];
+	all_box.checked = id_box.length==id_box_checked.length;
+	
 }

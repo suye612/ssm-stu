@@ -1,24 +1,23 @@
 package com.ytj.ssm.controller;
 
+import java.util.Date;
+
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.HEAD;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ytj.ssm.model.PageInfo;
-import com.ytj.ssm.util.DateUtil;
-import com.ytj.ssm.util.Exception.AppException;
-import com.ytj.ssm.util.Exception.BizExceptionEnum;
-import com.ytj.ssm.util.Status;
-import com.ytj.ssm.util.ToolUtil;
-import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
 import com.ytj.ssm.model.StudentModel;
 import com.ytj.ssm.service.IStudentService;
-
-import java.util.Date;
+import com.ytj.ssm.util.DateUtil;
+import com.ytj.ssm.util.Status;
+import com.ytj.ssm.util.ToolUtil;
+import com.ytj.ssm.util.Exception.AppException;
+import com.ytj.ssm.util.Exception.BizExceptionEnum;
 
 /**
  * 学生信息控制器
@@ -54,6 +53,7 @@ public class StudentController {
 		studentModel.setStatus(Status.ENABLE);
 		String stuNo = getStudentNo();
 		studentModel.setStudentNo(stuNo);
+		System.out.println(studentModel);
 		boolean flag = studentService.insert(studentModel);
 		if (flag) {
 			return BizExceptionEnum.SUCCESS_TIP;

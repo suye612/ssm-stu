@@ -53,16 +53,22 @@
 	width: 70px;
 }
 .showSelect{
-	height: 20px;
-	width: 50px;
+	height: 25px;
+	width: 105px;
 }
 .table{
 	margin-top: 20px;
-	width: 690px;
+	width: 840px;
 }
 .main{
-	width: 690px;
+	width: 840px;
 	text-align: center;
 	margin: 0 auto;
 	margin-top: 100px;
+}
+.contend{
+	width: 840px;
+	text-align: center;
+	margin: 0 auto;
+	margin-left: -5px;
 }

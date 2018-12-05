@@ -14,6 +14,7 @@
 <body >
 <div class="main">
     <input type="hidden" id="id" name="id" value="" class="show" />
+  <div class="contend">
     <label>学号:</label>
     <input type="text" id="studentNo" name="studentNo" value="" class="show"/>
     <label>姓名:</label>
@@ -30,6 +31,8 @@
     <input type="text" id="profession" name="profession" value="" class="show" />&ensp;
     <input type="button" onclick="queryAll()" value="查询" id="query"/>&ensp;
     <input type="button" onclick="saveOrUpdate()" value="增加" id="add"/>
+    <input type="button" onclick="deleteAll()" value="批量删除" id="deleteAll"/>
+    </div>
 <table border=1 cellspacing="0" class="table">
     <thead>
     <tr>
