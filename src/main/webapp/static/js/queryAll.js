@@ -28,13 +28,13 @@ function refresh() {
  * 收集文本框数据
  */
 function getSeleteData() {
-	var student = {};
-    student.studentNo = $("#studentNo").val();
-    student.name = $("#name").val();
-    student.sex = $("#sex option:selected").val();
-    student.age = Number($("#age").val());
-    student.profession = $("#profession").val();
-    return student;
+	var studentModel = {};
+    studentModel.studentNo = $("#studentNo").val();
+    studentModel.name = $("#name").val();
+    studentModel.sex = $("#sex option:selected").val();
+    studentModel.age = Number($("#age").val());
+    studentModel.profession = $("#profession").val();
+    return studentModel;
 }
 
 /**
@@ -56,9 +56,10 @@ function queryAll(page,count){
 		{
 			page : page,
 			pageSize : count,
-            student : data
+            studentModel : formData
         },
 		dataType : "json",
+        contentType: 'application/json',
 		success : function(data){
 			var list = data.list;
 			$("#page").val(data.page);//将当前页面存在隐藏域中
@@ -68,7 +69,7 @@ function queryAll(page,count){
 						"<td><input type='checkbox' name='checkbox' /></td>" +
 						"<td>"+list[i].studentNo +"</td>" +
 						"<td>"+list[i].name +"</td>" +
-						"<td>"+list[i].sex +"</td>" +
+						"<td>"+ formaterSex(list[i].sex) +"</td>" +
 						"<td>"+list[i].age +"</td>" +
 						"<td>"+list[i].profession +"</td>" +
 						"<td><input type='button' onclick='delStudent(this)' value='删除' stuId = "+ list[i].id+" >&emsp;" +
@@ -82,6 +83,18 @@ function queryAll(page,count){
 	})
 }
 
+/**
+ * 性别格式化函数
+ */
+function formaterSex(val) {
+    if (val == 1) {
+        return "男";
+    } else if (val == 2) {
+        return "女";
+    } else {
+    	return "未选择";
+    }
+}
 /**
  * 判断是新增还是修改
  */
@@ -103,9 +116,8 @@ function save() {
     $.ajax({
 		url : 'insertStudent',
 		type : 'POST',
-		data : {
-            studentModel : data
-		},
+        contentType: 'application/json',
+		data : formData ,
 		success : function (data) {
 			Amin.success("新增成功!");
 			initData();
@@ -140,7 +152,6 @@ function getStudent(obj) {
             })
             $("#age").val(data.age);
             $("#profession").val(data.profession);
-
             $("#add").val("修改")
         },
 		error : function (data) {
@@ -156,14 +167,15 @@ function getStudent(obj) {
 function update(id) {
     var data = getSeleteData();
     data.id = id;
+    var formData = JSON.stringify(data);
     $.ajax({
         url : '/updateStudent',
         type : 'POST',
-        data : {
-            studentModel : data
-        },
+        data : formData ,
+        contentType: 'application/json',
         success : function (data) {
             Amin.success("修改成功!");
+            $("#add").val("添加")
             initData();
             refresh();
         },
@@ -178,19 +190,24 @@ function update(id) {
  */
 function delStudent(obj) {
     var id = $(obj).attr("stuId");
-    $.ajax({
-        url : '/deleteStudent',
-        type : 'GET',
-        data : {
-            id : id
-        },
-		success : function (data) {
-            Amin.success("删除成功!");
-            initData();
-            refresh();
-        },
-        error : function (data) {
-            Amin.error("删除失败!");
-        }
+    layer.confirm('您确定要删除么?', {
+        btn: ['确定', '取消'],
+        title: "提示"
+    }, function(){
+        $.ajax({
+            url : '/deleteStudent',
+            type : 'GET',
+            data : {
+                id : id
+            },
+            success : function (data) {
+                Amin.success("删除成功!");
+                initData();
+                refresh();
+            },
+            error : function (data) {
+                Amin.error("删除失败!");
+            }
+        })
     })
 }

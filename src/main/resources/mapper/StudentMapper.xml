@@ -29,7 +29,14 @@
 		<include refid="sql_where"></include>
 	</select>
 	<select id="queryAll" resultType="com.ytj.ssm.model.StudentModel">
-		select * from tb_student
+		select
+		id,
+		name,
+		student_no as studentNo,
+		sex,
+		age,
+		profession
+		from tb_student
 		<where>
 		status = 1
 		<include refid="sql_where"></include>

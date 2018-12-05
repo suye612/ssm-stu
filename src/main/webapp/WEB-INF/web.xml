@@ -43,5 +43,7 @@
 		<servlet-name>SpringMVC</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-  
+  <listener>
+     <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+ </listener>
 </web-app>
