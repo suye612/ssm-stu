@@ -13,23 +13,27 @@ public enum BizExceptionEnum implements ServiceExceptionEnum{
     /**
      *新增失败!
      **/
-
+    INSERT_ERROR(400,"新增失败!"),
     /**
      *修改失败!
      **/
-
+    UPDATE_ERROR(400,"修改失败!"),
+    /**
+     *注册失败!
+     **/
+    REGISTER_ERROR(400,"注册失败!"),
     /**
      *删除失败!
      **/
-    REGISTER_ERROR(400,"注册失败")
+    DELETE_ERROR(400,"删除失败!"),
     /**
-     *删除失败!
+     *登录失败!
      **/
-
+    LONGIN_ERROR(400,"登录失败!"),
     /**
-     *前台参数异常!
+     *请求异常!
      **/
-
+    REQUEST_ERROR(400,"请求异常!")
     /**
      *数据库没有该资源!
      **/

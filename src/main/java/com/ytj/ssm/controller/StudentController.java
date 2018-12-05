@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.ytj.ssm.model.PageInfo;
 import com.ytj.ssm.util.DateUtil;
+import com.ytj.ssm.util.Exception.AppException;
 import com.ytj.ssm.util.Exception.BizExceptionEnum;
 import com.ytj.ssm.util.Status;
 import com.ytj.ssm.util.ToolUtil;
@@ -56,7 +57,7 @@ public class StudentController {
 		if (flag) {
 			return BizExceptionEnum.SUCCESS_TIP;
 		} else {
-			return "";
+			throw new AppException(BizExceptionEnum.INSERT_ERROR);
 		}
 	}
 	/**
@@ -76,15 +77,15 @@ public class StudentController {
 	 **/
 	@RequestMapping("/updateStudent")
 	@ResponseBody
-	public String updateStudent(StudentModel studentModel){
+	public Object updateStudent(StudentModel studentModel){
 		if (ToolUtil.isOneEmpty(studentModel,studentModel.getId())) {
-
+			throw new AppException(BizExceptionEnum.REQUEST_ERROR);
 		}
 		boolean flag = studentService.updateById(studentModel);
 		if (flag) {
-			return "";
+			return  BizExceptionEnum.SUCCESS_TIP;
 		} else {
-			return "";
+			throw new AppException(BizExceptionEnum.UPDATE_ERROR);
 		}
 	}
 	/**
@@ -94,13 +95,17 @@ public class StudentController {
 	 **/
 	@RequestMapping("/deleteStudent")
 	@ResponseBody
-	public String deleteStudent(StudentModel studentModel){
+	public Object deleteStudent(StudentModel studentModel){
 		if (ToolUtil.isOneEmpty(studentModel,studentModel.getId())) {
-
+			throw new AppException(BizExceptionEnum.REQUEST_ERROR);
 		}
 		studentModel.setStatus(Status.DISABLED);
-		studentService.updateById(studentModel);
-		return "";
+		boolean flag = studentService.updateById(studentModel);
+		if (flag) {
+			return BizExceptionEnum.SUCCESS_TIP;
+		} else {
+			throw new AppException(BizExceptionEnum.DELETE_ERROR);
+		}
 	}
 
 	/**

@@ -1,26 +1,29 @@
 package com.ytj.ssm.controller;
 
-import java.io.IOException;
-import java.util.List;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.ytj.ssm.model.AdminModel;
+import com.ytj.ssm.service.IAdminService;
+import com.ytj.ssm.util.Exception.AppException;
+import com.ytj.ssm.util.Exception.BizExceptionEnum;
+import com.ytj.ssm.util.Status;
+import com.ytj.ssm.util.ToolUtil;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.List;
 
-import com.ytj.ssm.util.Exception.AppException;
-import com.ytj.ssm.util.Exception.BizExceptionEnum;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.mapper.Wrapper;
-import com.ytj.ssm.model.AdminModel;
-import com.ytj.ssm.service.IAdminService;
-import com.ytj.ssm.util.Status;
-import com.ytj.ssm.util.ToolUtil;
-
+/**
+ * @Author: amin
+ * @Date: 2018/12/4 19:46
+ * @Description: 管理员登录控制器
+ */
 @Controller
 public class AdminController {
 	@Resource
@@ -29,20 +32,21 @@ public class AdminController {
 	@RequestMapping("/login")
 	//登录
 	public String login(AdminModel admin, HttpServletRequest request,HttpServletResponse response) throws IOException {
+		if (ToolUtil.isOneEmpty(admin, admin.getUsername(), admin.getIdcard())) {
+			throw new AppException(BizExceptionEnum.REGISTER_ERROR);
+		}
 		Wrapper<AdminModel> eq = new EntityWrapper<AdminModel>().eq("username", admin.getUsername())
 												  .and().eq("idcard", admin.getIdcard());
 		AdminModel adminModel = adminService.selectOne(eq);
 		if(ToolUtil.isNotEmpty(adminModel)){
 			HttpSession session = request.getSession();
 			session.setAttribute("admin",adminModel);
-			System.out.println(11111);
 			return "main";
 		}else{
 		//登录失败
-			 response.sendRedirect("index.jsp");
+			throw new AppException(BizExceptionEnum.LONGIN_ERROR);
+			 //response.sendRedirect("index.jsp");
 		}
-		return null;
-		
 	}
 	/**
 	 *注册

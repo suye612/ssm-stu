@@ -4,7 +4,10 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.ytj.ssm.model.ScoreModel;
 import com.ytj.ssm.service.IScoreService;
+import com.ytj.ssm.util.Exception.AppException;
+import com.ytj.ssm.util.Exception.BizExceptionEnum;
 import com.ytj.ssm.util.Status;
+import com.ytj.ssm.util.ToolUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +33,9 @@ public class ScoreComtroller {
     @RequestMapping("/selectScoreByStudentId")
     @ResponseBody
     public Object selectScoreByStudentId(Integer id){
+        if (ToolUtil.isEmpty(id)) {
+            throw new AppException(BizExceptionEnum.REGISTER_ERROR);
+        }
         Wrapper<ScoreModel> eq = new EntityWrapper<ScoreModel>().eq("", id)
                                        .and().eq("status", Status.ENABLE);
         List<ScoreModel> list = scoreService.selectList(eq);

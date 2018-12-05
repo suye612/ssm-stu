@@ -10,16 +10,16 @@
 </head>
 <body>
 <input type="text" id="id" name="id" value="学号"/>
-<input type="text" id="name" name="id" value="姓名"/>
-<input type="text" id="sex" name="id" value="性别"/>
-<input type="text" id="age" name="id" value="年龄"/>
-<input type="text" id="profession" name="id" value="专业"/>
+<input type="text" id="name" name="name" value="姓名"/>
+<input type="text" id="sex" name="sex" value="性别"/>
+<input type="text" id="age" name="age" value="年龄"/>
+<input type="text" id="profession" name="profession" value="专业"/>
 <input type="button" onclick="queryAll()" value="查询" id="query"/>
 <input type="button" onclick="add()" value="增加" id="add"/>
 <table border=1>
     <thead>
     <tr>
-        <td><input type ="checkbox" id="checkbox" onclick="checkAll()"/>全选</td>
+        <td><input type ="checkbox" id="ids" onclick="checkAll()"/>全选</td>
         <td>学号</td>
         <td>姓名</td>
         <td>性别</td>
