@@ -3,6 +3,7 @@ package com.ytj.ssm.model;
 import java.io.Serializable;
 
 import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
@@ -13,6 +14,7 @@ import lombok.Data;
 public class StudentModel extends Model<StudentModel>{
 	@TableId(value = "id", type = IdType.AUTO)
 	private Integer id;
+	@TableField("student_no")
 	private String studentNo;
 	private String name;
 	private String sex;

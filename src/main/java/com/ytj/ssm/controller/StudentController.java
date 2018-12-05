@@ -2,6 +2,7 @@ package com.ytj.ssm.controller;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.HEAD;
 
 import com.ytj.ssm.model.PageInfo;
 import com.ytj.ssm.util.DateUtil;
@@ -37,7 +38,7 @@ public class StudentController {
 	 **/
 	@RequestMapping(value = "/queryAll",method = RequestMethod.GET)
 	@ResponseBody
-	public PageInfo<StudentModel> queryAll(@RequestParam(value = "page" ,defaultValue = "1") Integer page, Integer pageSize, StudentModel student) {
+	public PageInfo<StudentModel> queryAll(@RequestParam(value = "page" ,defaultValue = "1") Integer page, Integer pageSize,  StudentModel student) {
 		//查询全部
 		PageInfo<StudentModel>  pageInfo = studentService.queryAll(page,pageSize,student);
 		return 	pageInfo;
@@ -53,7 +54,6 @@ public class StudentController {
 		studentModel.setStatus(Status.ENABLE);
 		String stuNo = getStudentNo();
 		studentModel.setStudentNo(stuNo);
-		System.out.println(studentModel);
 		boolean flag = studentService.insert(studentModel);
 		if (flag) {
 			return BizExceptionEnum.SUCCESS_TIP;
@@ -115,8 +115,8 @@ public class StudentController {
 	 * @return 
 	 **/
 	public String getStudentNo(){
-		StringBuffer stuNo = new StringBuffer();
-		stuNo.append(DateUtil.formatDate(new Date(), "yyyy"));
-		return String.valueOf(stuNo);
+		String stuNo = null;
+		stuNo = DateUtil.formatDate(new Date(), "yyyy");
+		return stuNo;
 	}
 }
