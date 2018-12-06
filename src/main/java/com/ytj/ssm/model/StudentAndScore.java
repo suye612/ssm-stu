@@ -15,11 +15,10 @@ public class StudentAndScore {
     private Integer age;
     private Integer status;
     private String profession;
-    private  String chinese;
-    private  String math;
-    private  String english;
-    private  String art;
-    private  String music;
-    private  String history;
-
+    private  Double chinese;
+    private  Double math;
+    private  Double english;
+    private  Double art;
+    private  Double music;
+    private  Double history;
 }

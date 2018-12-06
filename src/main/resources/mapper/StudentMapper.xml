@@ -46,5 +46,7 @@
 		</where>
 		limit #{page},#{pageSize}
 	</select>
-
+	<select id="selectLastStudent" resultType="java.lang.String">
+		select student_no from tb_student where status = 1 order by id desc limit 0,1 ;
+	</select>
 </mapper>

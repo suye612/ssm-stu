@@ -38,8 +38,6 @@ public class ScoreComtroller {
         if (ToolUtil.isEmpty(id)) {
             throw new AppException(BizExceptionEnum.REGISTER_ERROR);
         }
-        Wrapper<ScoreModel> eq = new EntityWrapper<ScoreModel>().eq("student_id", id);
-        System.out.println(scoreService.selectOne(eq));
         StudentAndScore studentAndScore = scoreService.selectStudentAndScore(id);
         return studentAndScore;
     }

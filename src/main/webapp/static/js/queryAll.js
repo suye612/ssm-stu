@@ -19,7 +19,7 @@ function initData() {
  * 刷新表格
  */
 function refresh() {
-    var page = $("#page option:selected").val();
+    var page = $("#page option:selected").val() == null ? 1 : $("#page option:selected").val();
     var pageSize = $("#pageSize option:selected").val();
     queryAll(page,pageSize);
 }
@@ -125,7 +125,6 @@ function queryAll(page,pageSize){
 }
 function checkboxChecked() {
     //绑定选中事件
-
     $("tbody tr").mouseover(function(){
         $(this).css("background-color","aqua");
     });
@@ -167,9 +166,40 @@ function saveOrUpdate() {
     }
 }
 /**
+ * 验证表单组建不能为空
+ * @param input
+ * @returns {boolean}
+ */
+function validateFeeling() {
+    var name = $("#name").val().trim();
+    var sex = $("#sex option:selected").val();
+    var age = $("#age").val().trim();
+    var profession = $("#profession").val().trim();
+    if (name == null || name == '') {
+        Amin.error("姓名不能为空!")
+        return false
+    }
+    if (age == null || age == '') {
+        Amin.error("年龄不能为空!")
+        return false
+    }
+    if (profession == null || profession == '') {
+        Amin.error("专业不能为空!")
+        return false
+    }
+    if (sex == null || sex == '' || sex== 0) {
+        Amin.error("请选择性别!")
+        return false
+    }
+    return true;
+}
+/**
  * 新增学生
  */
 function save() {
+    if (!validateFeeling()) {
+        return
+    }
     var data = getSeleteData();
     //var formData = JSON.stringify(data);
     var formData = JSON.stringify(data);
@@ -222,10 +252,13 @@ function getStudent(obj) {
 }
 
 /***
- * 新增学生
+ * 修改学生
  * @param id
  */
 function update(id) {
+    if (!validateFeeling()) {
+        return
+    }
     var data = getSeleteData();
     data.id = id;
     var formData = JSON.stringify(data);
@@ -280,6 +313,7 @@ function deleteAll(){
             ids[i] = $(this).val();
         })
         deleteStudents(ids);
+        $("#all")[0].attr('checked', false);
     }
 }
 function deleteStudents(ids) {
@@ -342,12 +376,11 @@ function totalScore() {
     var total = 0 ;
     $(".total").each(function (i,e) {
         total += parseFloat($(e).text());
-        
     })
-    alert(total)
     return total;
 }
 function cancel() {
 	 $("#editl").css("display", "none");
      $("#detail").css("display", "none");
 }
+

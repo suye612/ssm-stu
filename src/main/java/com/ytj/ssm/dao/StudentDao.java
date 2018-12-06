@@ -13,4 +13,6 @@ public interface StudentDao extends BaseMapper<StudentModel> {
 
 	List<StudentModel> queryAll(@Param("page") Integer page, @Param("pageSize") Integer pageSize,
 								@Param("student") StudentModel student);
+
+    String selectLastStudent();
 }

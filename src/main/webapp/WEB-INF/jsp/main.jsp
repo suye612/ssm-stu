@@ -10,15 +10,20 @@
 	<script type="application/javascript"  src="static/js/layer/layer.js"></script>
 	<script type="application/javascript"  src="static/js/amin.js"></script>
 	<script type="application/javascript"  src="static/js/queryAll.js"></script>
+    <style>
+        .span_val{
+            margin-left: 20px;
+        }
+    </style>
 </head>
-<body >
-<div class="main">
+<body style="text-align: center">
+    <div class="main">
     <input type="hidden" id="id" name="id" value="" class="show" />
    <div class="contend">
     <label>学号:</label>
     <input type="text" id="studentNo" name="studentNo" value="" class="show" readonly/>
     <label>姓名:</label>
-    <input type="text" id="name" name="name" value="" class="show" />
+    <input type="text" id="name" name="name" value="" class="show"  required />
     <label for="sex">性别:</label>
     <select id="sex"  class="showSelect ">
         <option value="0">--请选择--</option>
@@ -26,9 +31,9 @@
         <option value="2">女</option>
     </select>
     <label>年龄:</label>
-    <input type="number" id="age" name="age" min="0" value="" class="show" />
+    <input type="number" id="age" name="age" min="0" value="" class="show"  required/>
     <label>专业:</label>
-    <input type="text" id="profession" name="profession" value="" class="show" />&ensp;
+    <input type="text" id="profession" name="profession" value="" class="show"  required />&ensp;
     <input type="button" onclick="queryAll()" value="查询" id="query"/>&ensp;
     <input type="button" onclick="saveOrUpdate()" value="增加" id="add"/>&ensp;
     <input type="button" onclick="deleteAll()" value="批量删除" id="deleteAll"/>
@@ -56,7 +61,7 @@
                     <option value="15">15</option>
                  </select>条
          </p>
-        <p style="margin-left: 190px; float: left">
+        <p style="margin-left: 200px; float: left">
             <input type="button" value="上一页" id="backPage"/>&emsp;&emsp;&emsp;
             <input type="button" value="下一页" id="nextPage"/>
         </p>
@@ -66,33 +71,33 @@
          </p>
     </div>
 </div>
-<!-- 隐藏域存放当前页数 -->
-	<!--opacity: 1,遮罩层,透明度  -->
-	<div id="editl" style="width:500px;height:500px;background:aqua;
-	position: absolute;left:400px;top:400px;display:none; opacity: 0.5;">
-	</div>
-	
-	<div id="detail" style="text-align:left;padding-left:50px ;width:420px;height:380px;background:white;position:absolute;left:420px;top:450px;display:none;">
+    <!-- 隐藏域存放当前页数 -->
+    <%--position: absolute;left:400px;top:400px;
+
+    position:absolute;left:420px;top:450px;--%>
+
+	<div id="detail" style="text-align:left;padding-left:50px ;width:420px;height:380px;background:white;display:none;
+	margin: 150px auto 0 ">
 	<h2 style="background: black;text-align: center;color: white;width: 470px;margin-left: -50px;margin-top: -20px">詳情頁面</h2>
 	<p >
         <label>学&emsp;号:</label>
-        <span id="stuNo"></span>
+        <span id="stuNo" class="span_val"></span>
     </p>
 	<p >
         <label>姓&emsp;名:</label>
-        <span id="stuName"></span>
+        <span id="stuName" class="span_val"></span>
     </p>
 	<p >
         <label>性&emsp;别:</label>
-        <span id="stuSex"></span>
+        <span id="stuSex" class="span_val"></span>
     </p>
 	<p >
         <label>年&emsp;龄:</label>
-        <span id="stuAge"></span>
+        <span id="stuAge" class="span_val"></span>
     </p>
 	<p >
         <label>专&emsp;业:</label>
-        <span id="stuProfession"></span>
+        <span id="stuProfession" class="span_val"></span>
     </p>
 	<h4 style="text-align: left;">成績</h4>
 	
@@ -109,9 +114,15 @@
 	<tbody id="score">
 	</tbody>
 	</table>
-	<br>
-	<input type="button" value="取消" style="color: blue;font-size:20px" onclick="cancel() "/>
+	<p style="position:relative;left:0px;top:10px; z-index: 99">
+        <input type="button" value="取  消" style="color: white;width: 80px;height: 30px;background-color: rgba(67,136,176,0.74);
+        outline: none;border-width:0px;border-radius:7px;font-size: 18px" onclick="cancel() "/>
+    </p>
 	</div>
+    <!--opacity: 1,遮罩层,透明度  -->
+    <div id="editl" style="width:500px;height:500px;background:aqua;
+	display:none; opacity: 0.3; margin: -440px auto 0 ">
+    </div>
 </body>
 
 </html>

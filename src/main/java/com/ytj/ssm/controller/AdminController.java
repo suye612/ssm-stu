@@ -31,7 +31,7 @@ public class AdminController {
 	
 	@RequestMapping("/login")
 	//登录
-	public String login(AdminModel admin, HttpServletRequest request,HttpServletResponse response) throws IOException {
+	public String login(AdminModel admin, HttpServletRequest request) throws IOException {
 		if (ToolUtil.isOneEmpty(admin, admin.getUsername(), admin.getIdcard())) {
 			throw new AppException(BizExceptionEnum.REGISTER_ERROR);
 		}
@@ -44,7 +44,7 @@ public class AdminController {
 			return "main";
 		}else{
 		//登录失败
-			throw new AppException(BizExceptionEnum.LONGIN_ERROR);
+			return "index";
 		}
 	}
 	/**
@@ -52,17 +52,14 @@ public class AdminController {
 	 * @throws IOException 
 	 **/
 	@RequestMapping("/reg")
-	public String reg(AdminModel admin,HttpServletResponse response) throws IOException{
+	public String reg(AdminModel admin ) throws IOException{
 		admin.setStatus(Status.ENABLE);
-		System.out.println(admin);
 		boolean flag = adminService.insert(admin);
 		if(flag){
-		//	return "index";
-			 response.sendRedirect("index.jsp");
+			return "index";
 		}else{
 			throw new AppException(BizExceptionEnum.REGISTER_ERROR);
 		}
-		return null;
 	}
 	/**
 	 * 跳转到注册页面
@@ -70,6 +67,13 @@ public class AdminController {
 	@RequestMapping("/register")
 	public String reg() {
 		return "reg";
+	}
+	/**
+	 * 跳转到登录页面
+	 **/
+	@RequestMapping("/")
+	public String index() {
+		return "index";
 	}
 	/**
 	 * @return
