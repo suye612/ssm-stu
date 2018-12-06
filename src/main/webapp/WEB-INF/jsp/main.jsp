@@ -56,7 +56,7 @@
                     <option value="15">15</option>
                  </select>条
          </p>
-        <p style="margin-left: 200px; float: left">
+        <p style="margin-left: 190px; float: left">
             <input type="button" value="上一页" id="backPage"/>&emsp;&emsp;&emsp;
             <input type="button" value="下一页" id="nextPage"/>
         </p>
@@ -68,22 +68,18 @@
 </div>
 <!-- 隐藏域存放当前页数 -->
 	<!--opacity: 1,遮罩层,透明度  -->
-	<div id="editl" style="width:1400px;height:900px;background:aqua;
-	position: absolute;left:0px;top:0px;display:none; opacity: 0.5;">
+	<div id="editl" style="width:500px;height:500px;background:aqua;
+	position: absolute;left:400px;top:400px;display:none; opacity: 0.5;">
 	</div>
-	<div id="detail" style="text-align:center; width:200px;height:170px;background:white;position:absolute;left:300px;top:55px;display:none;">
-	<p>
-		<label>学号</label>
-		<input style="width:80px;background:aqua " id="id" readonly="readonly"/>
-	</p>
-	<p> <label>姓名:</label> <input style="width:80px;" id=name></p>
-	<p> <label>性别:</label> <input style="width:80px;" id="price"></p>
-	<p> <label>年龄:</label> <input style="width:80px;" id="price"></p>
-	<p> <label>专业:</label> <input style="width:80px;" id="price"></p>
-	<p> <label>手机号:</label> <input style="width:80px;" id="price"></p>
-	<br>
-	成绩：
-	<table>
+	<div id="detail" style="text-align:left;padding-left:50px ;width:420px;height:380px;background:white;position:absolute;left:420px;top:450px;display:none;">
+	<h2 style="background: black;text-align: center;color: white;width: 470px;margin-left: -50px;margin-top: -20px">詳情頁面</h2>
+	<p id="studentNo">学&emsp;号:</p>
+	<p id="name">姓&emsp;名:</p>
+	<p id="sex">性&emsp;别:</p>
+	<p id="age">年&emsp;龄:</p>
+	<p id="profession"> 专&emsp;业:</p>
+	<h4 style="left">成績</h4>
+	<table border=1 cellspacing="0" style="width: 400px">
 	<thead>
 		<th>语文</th>
 		<th>数学</th>
