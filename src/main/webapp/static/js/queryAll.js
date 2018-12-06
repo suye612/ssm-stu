@@ -66,7 +66,7 @@ function queryAll(page,pageSize){
                     "<td><input type='checkbox' name='ids' value='"+ list[i].id +"'/></td>" +
                     "<td>"+list[i].studentNo +"</td>" +
                     "<td>"+list[i].name +"</td>" +
-                    "<td>"+ formaterSex(list[i].sex) +"</td>" +
+                    "<td>"+formaterSex(list[i].sex) +"</td>" +
                     "<td>"+list[i].age +"</td>" +
                     "<td>"+list[i].profession +"</td>" +
                     "<td><input type='button' onclick='delStudent(this)' value='删除'>&emsp;" +
@@ -329,7 +329,7 @@ function detailStudent(obj){
                 "<td class='total'>" + data.art + "</td>" +
                 "<td class='total'>" + data.music + "</td>" +
                 "<td class='total'>" + data.history + "</td>" +
-                "<td id='total'></td>" +
+                "<td id='total'>  </td>" +
                 "</tr>")
             $("#score").append(tr);
             $("#total").text(totalScore());
@@ -342,6 +342,12 @@ function totalScore() {
     var total = 0 ;
     $(".total").each(function (i,e) {
         total += parseFloat($(e).text());
+        
     })
+    alert(total)
     return total;
+}
+function cancel() {
+	 $("#editl").css("display", "none");
+     $("#detail").css("display", "none");
 }

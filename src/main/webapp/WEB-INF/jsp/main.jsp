@@ -109,6 +109,8 @@
 	<tbody id="score">
 	</tbody>
 	</table>
+	<br>
+	<input type="button" value="取消" style="color: blue;font-size:20px" onclick="cancel() "/>
 	</div>
 </body>
 

@@ -15,12 +15,12 @@ import lombok.Data;
 public class ScoreModel extends Model<ScoreModel>{
 	@TableId(value = "id", type = IdType.AUTO)
     private  Integer id;
-    private  String chinese;
-    private  String math;
-    private  String english;
-    private  String art;
-    private  String music;
-    private  String history;
+    private  Double chinese;
+    private  Double math;
+    private  Double english;
+    private  Double art;
+    private  Double music;
+    private  Double history;
     @TableField("student_id")
     private  Integer studentId;
     

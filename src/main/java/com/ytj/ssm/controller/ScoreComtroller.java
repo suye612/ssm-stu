@@ -12,6 +12,7 @@ import com.ytj.ssm.util.ToolUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -37,6 +38,8 @@ public class ScoreComtroller {
         if (ToolUtil.isEmpty(id)) {
             throw new AppException(BizExceptionEnum.REGISTER_ERROR);
         }
+        Wrapper<ScoreModel> eq = new EntityWrapper<ScoreModel>().eq("student_id", id);
+        System.out.println(scoreService.selectOne(eq));
         StudentAndScore studentAndScore = scoreService.selectStudentAndScore(id);
         return studentAndScore;
     }

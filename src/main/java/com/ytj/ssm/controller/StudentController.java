@@ -42,7 +42,6 @@ public class StudentController {
 	@RequestMapping(value = "/queryAll",method = RequestMethod.POST)
 	@ResponseBody
 	public PageInfo<StudentModel> queryAll( @RequestBody JSONObject data) {
-		System.out.println(11111);
 		Integer page = data.getInteger("page");
 		Integer pageSize = data.getInteger("pageSize");
 		StudentModel student = JSONObject.toJavaObject(data, StudentModel.class);
@@ -62,7 +61,6 @@ public class StudentController {
 		studentModel.setStatus(Status.ENABLE);
 		String stuNo = getStudentNo();
 		studentModel.setStudentNo(stuNo);
-		System.out.println(studentModel);
 		boolean flag = studentService.insert(studentModel);
 		if (flag) {
 			return BizExceptionEnum.SUCCESS_TIP;
