@@ -11,7 +11,7 @@ function initData() {
             $("#id").val("");
             $("#studentNo").val("");
             $("#name").val("");
-            $("#sex option:selected").val("0")
+            $("#sex").val("0")
             $("#age").val("");
             $("#profession").val("");
 }
