@@ -1,11 +1,6 @@
 $(function(){
     initData()
-	queryAll(1,5);
-    $("#pageSize").change(function () {
-        var page = $("#page").val();
-        var pageSize = $("#pageSize option:selected").val();
-        queryAll(page,pageSize);
-    })
+    refresh()
 })
 
 /**
@@ -24,7 +19,7 @@ function initData() {
  * 刷新表格
  */
 function refresh() {
-    var page = $("#page").val();
+    var page = $("#page option:selected").val();
     var pageSize = $("#pageSize option:selected").val();
     queryAll(page,pageSize);
 }
@@ -62,33 +57,51 @@ function queryAll(page,pageSize){
         contentType: 'application/json',
 		success : function(data){
 			var list = data.list;
-			$("#page").val(data.page);//将当前页面存在隐藏域中
+            var maxPage = data.maxPage;
+            $("#maxPage").text(maxPage);
+            var _page = data.page;
 			$("#t1 tr").remove();
-			for (var i = 0; i < list.length; i++) {
-				var tr = $("<tr>" +
-						"<td><input type='checkbox' name='ids' value='"+ list[i].id +"'/></td>" +
-						"<td>"+list[i].studentNo +"</td>" +
-						"<td>"+list[i].name +"</td>" +
-						"<td>"+ formaterSex(list[i].sex) +"</td>" +
-						"<td>"+list[i].age +"</td>" +
-						"<td>"+list[i].profession +"</td>" +
-						"<td><input type='button' onclick='delStudent(this)' value='删除'>&emsp;" +
-						"<input type='button' onclick='getStudent(this)' value='编辑' >&emsp;" +
-						"<input type='button' onclick='detailStuden(this)' value='详情' >" +
-						"</td>" +
-						"</tr>")
-				$("#t1").append(tr);
-			}
-            checkboxChecked();
-            if (data.page != 1) {
-                $("#backPage").unbind().click(function () {
-                    queryAll(data.page-1,pageSize)
-                });
+            for (var i = 0; i < list.length; i++) {
+                var tr = $("<tr>" +
+                    "<td><input type='checkbox' name='ids' value='"+ list[i].id +"'/></td>" +
+                    "<td>"+list[i].studentNo +"</td>" +
+                    "<td>"+list[i].name +"</td>" +
+                    "<td>"+ formaterSex(list[i].sex) +"</td>" +
+                    "<td>"+list[i].age +"</td>" +
+                    "<td>"+list[i].profession +"</td>" +
+                    "<td><input type='button' onclick='delStudent(this)' value='删除'>&emsp;" +
+                    "<input type='button' onclick='getStudent(this)' value='编辑' >&emsp;" +
+                    "<input type='button' onclick='detailStuden(this)' value='详情' >" +
+                    "</td>" +
+                    "</tr>")
+                $("#t1").append(tr);
             }
-           var maxPage =  data.maxCount % data.pageSize == 0 ? data.maxCount / data.pageSize : data.maxCount / data.pageSize +1;
-            if (data.page != maxPage) {
+            $("#page").empty();
+            for(var i=1;i<= maxPage;i++){
+                if (_page == i) {
+                    $("#page").append("<option value=' " + i + " 'selected>" + i + "</option>");
+                } else {
+                    $("#page").append("<option value=' " + i + " '>"+ i +"</option>");
+                }
+            }
+            $("#pageSize").change(function () {
+                refresh();
+            });
+            $("#page").change(function () {
+                refresh();
+            });
+            checkboxChecked();
+            //为下一页绑定事件
+            if (data.isFirstPage == false) {
+                $("#backPage").unbind().click(function () {
+                    queryAll(data.backPage, pageSize)
+                });
+
+            }
+            //为上一页绑定事件
+            if (data.isLastPage == false) {
                 $("#nextPage").unbind().click(function () {
-                    queryAll(data.page+1,pageSize)
+                    queryAll(data.nextPage, pageSize)
                 });
             }
 		}

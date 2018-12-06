@@ -57,10 +57,11 @@
     <label>条</label>
     &emsp;&emsp;&emsp;
 <input type="button" value="上一页" id="backPage"/>&emsp;&emsp;&emsp;
-<input type="button" value="下一页" id="nextPage"/>
+<input type="button" value="下一页" id="nextPage"/> &emsp;&emsp;&emsp;
+    第<select id="page"><option value="1">1</option></select>页 &emsp;共<span id="maxPage"></span>页
 </div>
 <!-- 隐藏域存放当前页数 -->
-<input type="hidden" id="page" value="1"/>
+
 </body>
 
 </html>
