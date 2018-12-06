@@ -41,9 +41,11 @@ public class StudentController {
 	@ResponseBody
 	public PageInfo<StudentModel> queryAll(@RequestParam(value = "page" ,defaultValue = "1") Integer page,
 										   Integer pageSize,  @RequestBody JSONObject studentModel) {
+		System.out.println(1111);
 		StudentModel student = JSONObject.toJavaObject(studentModel, StudentModel.class);
 		//查询全部
 		PageInfo<StudentModel>  pageInfo = studentService.queryAll(page,pageSize,student);
+		System.out.println(pageInfo);
 		return 	pageInfo;
 	}
 	/**
