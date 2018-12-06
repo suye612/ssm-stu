@@ -71,7 +71,7 @@ function queryAll(page,pageSize){
                     "<td>"+list[i].profession +"</td>" +
                     "<td><input type='button' onclick='delStudent(this)' value='删除'>&emsp;" +
                     "<input type='button' onclick='getStudent(this)' value='编辑' >&emsp;" +
-                    "<input type='button' onclick='detailStuden(this)' value='详情' >" +
+                    "<input type='button' onclick='detailStudent(this)' value='详情' >" +
                     "</td>" +
                     "</tr>")
                 $("#t1").append(tr);
@@ -306,12 +306,42 @@ function deleteStudents(ids) {
     })
 }
 //詳情
-function detailStuden(){
-	$("#editl").css("display","block");
-	$("#detail").css("display","block");
-	//获取商品的id
-	
-	
-	
-	
+function detailStudent(obj){
+	//获取学生的id
+    var id = $(obj).parent().parent().children().eq(0).children().val();
+    $.ajax({
+        url : 'selectScoreByStudentId',
+        type : 'GET',
+        data : {
+            id : id
+        },
+        success : function (data) {
+            $("#stuNo").text(data.studentNo);
+            $("#stuName").text(data.name);
+            $("#stuSex").text(formaterSex(data.sex));
+            $("#stuAge").text(data.age);
+            $("#stuProfession").text(data.profession);
+            $("#score tr").remove();
+            var tr = $("<tr>" +
+                "<td class='total'>" + data.chinese + "</td>" +
+                "<td class='total'>" + data.math + "</td>" +
+                "<td class='total'>" + data.english + "</td>" +
+                "<td class='total'>" + data.art + "</td>" +
+                "<td class='total'>" + data.music + "</td>" +
+                "<td class='total'>" + data.history + "</td>" +
+                "<td id='total'></td>" +
+                "</tr>")
+            $("#score").append(tr);
+            $("#total").text(totalScore());
+            $("#editl").css("display", "block");
+            $("#detail").css("display", "block");
+        }
+    })
+}
+function totalScore() {
+    var total ;
+    $(".total").each(function (i,e) {
+        total += parseFloat($(e).text());
+    })
+    return total;
 }

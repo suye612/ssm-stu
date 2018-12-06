@@ -74,14 +74,27 @@
 	
 	<div id="detail" style="text-align:left;padding-left:50px ;width:420px;height:380px;background:white;position:absolute;left:420px;top:450px;display:none;">
 	<h2 style="background: black;text-align: center;color: white;width: 470px;margin-left: -50px;margin-top: -20px">詳情頁面</h2>
-	
-	<p id="studentNo">学&emsp;号:</p>
-	<p id="name">姓&emsp;名:</p>
-	<p id="sex">性&emsp;别:</p>
-	<p id="age">年&emsp;龄:</p>
-	<p id="profession">专&emsp;业:</p>
-	
-	<h4 style="left">成績</h4>
+	<p >
+        <label>学&emsp;号:</label>
+        <span id="stuNo"></span>
+    </p>
+	<p >
+        <label>姓&emsp;名:</label>
+        <span id="stuName"></span>
+    </p>
+	<p >
+        <label>性&emsp;别:</label>
+        <span id="stuSex"></span>
+    </p>
+	<p >
+        <label>年&emsp;龄:</label>
+        <span id="stuAge"></span>
+    </p>
+	<p >
+        <label>专&emsp;业:</label>
+        <span id="stuProfession"></span>
+    </p>
+	<h4 style="text-align: left;">成績</h4>
 	
 	<table border=1 cellspacing="0" style="width: 400px">
 	<thead>
@@ -91,6 +104,7 @@
 		<th>艺术</th>
 		<th>音乐</th>
 		<th>历史</th>
+		<th>总计</th>
 	</thead>
 	<tbody id="score">
 	</tbody>

@@ -33,11 +33,11 @@ public enum BizExceptionEnum implements ServiceExceptionEnum{
     /**
      *请求异常!
      **/
-    REQUEST_ERROR(400,"请求异常!")
+    REQUEST_ERROR(400,"请求异常!"),
     /**
      *数据库没有该资源!
      **/
-
+    NO_DATA_ERROR(400,"数据库没有该资源!")
     ;
     BizExceptionEnum(int code, String message) {
         this.code = code;

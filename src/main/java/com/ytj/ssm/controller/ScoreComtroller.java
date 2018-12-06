@@ -3,6 +3,7 @@ package com.ytj.ssm.controller;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.ytj.ssm.model.ScoreModel;
+import com.ytj.ssm.model.StudentAndScore;
 import com.ytj.ssm.service.IScoreService;
 import com.ytj.ssm.util.Exception.AppException;
 import com.ytj.ssm.util.Exception.BizExceptionEnum;
@@ -32,11 +33,11 @@ public class ScoreComtroller {
      **/
     @RequestMapping("/selectScoreByStudentId")
     @ResponseBody
-    public Object selectScoreByStudentId(Integer id){
+    public StudentAndScore selectScoreByStudentId(Integer id){
         if (ToolUtil.isEmpty(id)) {
             throw new AppException(BizExceptionEnum.REGISTER_ERROR);
         }
-        Wrapper<ScoreModel> eq = new EntityWrapper<ScoreModel>().eq("student_id", id);
-        return scoreService.selectOne(eq);
+        StudentAndScore studentAndScore = scoreService.selectStudentAndScore(id);
+        return studentAndScore;
     }
 }
