@@ -54,14 +54,9 @@ function queryAll(page,pageSize){
     var formData = JSON.stringify(data);
 	$.ajax({
 		url :"queryAll",
-<<<<<<< HEAD
-		type : "post",
 		data :formData,
         dataType:"json",
-=======
 		type : "POST",
-		data :formData,
->>>>>>> 176a2b58b91f0afb344231f1e9c44eec42f453cc
         contentType: 'application/json',
 		success : function(data){
 			var list = data.list;
