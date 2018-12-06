@@ -82,32 +82,43 @@ function queryAll(page,pageSize){
             $("#page").empty();
             for(var i=1;i<= maxPage;i++){
                 if (_page == i) {
-                    $("#page").append("<option value=' " + i + " ' selected >" + i + "</option>");
+                    $("#page").append("<option value=' " +i+ " ' selected >" + i + "</option>");
                 } else {
-                    $("#page").append("<option value=' " + i + " '>"+ i +"</option>");
+                    $("#page").append("<option value=' " +i+ " '>"+ i +"</option>");
                 }
             }
             $("#pageSize").unbind().change(function () {
+                $("#page option").each(function (i,e) {
+                    $(this).attr('selected',false)
+                    if ($(e).val() == "1") {
+                        $(this).attr('selected','selected');
+                    }
+                })
                 refresh();
             });
             $("#page").unbind().change(function () {
                 refresh();
             });
             checkboxChecked();
-            //为下一页绑定事件
+            //为上一页绑定事件
             if (data.isFirstPage == false) {
                 $("#backPage").unbind().click(function () {
                     var pageSize = $("#pageSize option:selected").val();
                     queryAll(data.backPage, pageSize)
+                    $("#backPage").unbind();
                 });
-
+            } else{
+                $("#backPage").unbind();
             }
-            //为上一页绑定事件
+            //为下一页绑定事件
             if (data.isLastPage == false) {
                 $("#nextPage").unbind().click(function () {
                     var pageSize = $("#pageSize option:selected").val();
                     queryAll(data.nextPage, pageSize)
+                    $("#nextPage").unbind();
                 });
+            } else {
+                $("#nextPage").unbind();
             }
 		}
 	})
