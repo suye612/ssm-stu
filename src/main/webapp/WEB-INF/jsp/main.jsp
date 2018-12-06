@@ -56,7 +56,7 @@
                     <option value="15">15</option>
                  </select>条
          </p>
-        <p style="margin-left: 190px; float: left">
+        <p style="margin-left: 200px; float: left">
             <input type="button" value="上一页" id="backPage"/>&emsp;&emsp;&emsp;
             <input type="button" value="下一页" id="nextPage"/>
         </p>
