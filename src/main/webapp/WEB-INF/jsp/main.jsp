@@ -71,14 +71,18 @@
 	<div id="editl" style="width:500px;height:500px;background:aqua;
 	position: absolute;left:400px;top:400px;display:none; opacity: 0.5;">
 	</div>
+	
 	<div id="detail" style="text-align:left;padding-left:50px ;width:420px;height:380px;background:white;position:absolute;left:420px;top:450px;display:none;">
 	<h2 style="background: black;text-align: center;color: white;width: 470px;margin-left: -50px;margin-top: -20px">詳情頁面</h2>
+	
 	<p id="studentNo">学&emsp;号:</p>
 	<p id="name">姓&emsp;名:</p>
 	<p id="sex">性&emsp;别:</p>
 	<p id="age">年&emsp;龄:</p>
-	<p id="profession"> 专&emsp;业:</p>
+	<p id="profession">专&emsp;业:</p>
+	
 	<h4 style="left">成績</h4>
+	
 	<table border=1 cellspacing="0" style="width: 400px">
 	<thead>
 		<th>语文</th>
