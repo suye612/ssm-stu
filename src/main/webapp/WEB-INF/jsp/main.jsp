@@ -96,7 +96,7 @@
     </p>
 	<h4 style="text-align: left;">成績</h4>
 	
-	<table border=1 cellspacing="0" style="width: 400px">
+	<table border=1 cellspacing="0" style="width: 400px;text-align: center">
 	<thead>
 		<th>语文</th>
 		<th>数学</th>
