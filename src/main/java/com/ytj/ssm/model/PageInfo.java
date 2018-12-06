@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class PageInfo<T> implements Serializable {
     private int page;
-    private int pageSize = 5;
+    private int pageSize;
     private int maxCount;
     private int maxPage;
     private int start;
