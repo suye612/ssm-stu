@@ -294,3 +294,13 @@ function deleteStudents(ids) {
         })
     })
 }
+//詳情
+function detailStuden(){
+	$("#editl").css("display","block");
+	$("#detail").css("display","block");
+	//获取商品的id
+	
+	
+	
+	
+}

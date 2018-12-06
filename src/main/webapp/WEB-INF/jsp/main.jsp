@@ -67,7 +67,35 @@
     </div>
 </div>
 <!-- 隐藏域存放当前页数 -->
-
+	<!--opacity: 1,遮罩层,透明度  -->
+	<div id="editl" style="width:1400px;height:900px;background:aqua;
+	position: absolute;left:0px;top:0px;display:none; opacity: 0.5;">
+	</div>
+	<div id="detail" style="text-align:center; width:200px;height:170px;background:white;position:absolute;left:300px;top:55px;display:none;">
+	<p>
+		<label>学号</label>
+		<input style="width:80px;background:aqua " id="id" readonly="readonly"/>
+	</p>
+	<p> <label>姓名:</label> <input style="width:80px;" id=name></p>
+	<p> <label>性别:</label> <input style="width:80px;" id="price"></p>
+	<p> <label>年龄:</label> <input style="width:80px;" id="price"></p>
+	<p> <label>专业:</label> <input style="width:80px;" id="price"></p>
+	<p> <label>手机号:</label> <input style="width:80px;" id="price"></p>
+	<br>
+	成绩：
+	<table>
+	<thead>
+		<th>语文</th>
+		<th>数学</th>
+		<th>英语</th>
+		<th>艺术</th>
+		<th>音乐</th>
+		<th>历史</th>
+	</thead>
+	<tbody id="score">
+	</tbody>
+	</table>
+	</div>
 </body>
 
 </html>
