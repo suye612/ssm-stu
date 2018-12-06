@@ -71,7 +71,7 @@ function queryAll(page,pageSize){
                     "<td>"+list[i].profession +"</td>" +
                     "<td><input type='button' onclick='delStudent(this)' value='删除'>&emsp;" +
                     "<input type='button' onclick='getStudent(this)' value='编辑' >&emsp;" +
-                    "<input type='button' onclick='detailStuden(this)' value='详情' >" +
+                    "<input type='button' onclick='detailStudent(this)' value='详情' >" +
                     "</td>" +
                     "</tr>")
                 $("#t1").append(tr);
@@ -306,50 +306,42 @@ function deleteStudents(ids) {
     })
 }
 //詳情
-function detailStuden(obj){
-	$("#editl").css("display","block");
-	$("#detail").css("display","block");
-	var  studentNo = $(obj).parent().parent().children().eq(1).val();
-	alert(studentNo)
-	var  name = $(obj).parent().parent().children().eq(2).val();
-	var  sex = $(obj).parent().parent().children().eq(3).val();
-	var  age = $(obj).parent().parent().children().eq(4).val();
-	var profession = $(obj).parent().parent().children().eq(5).val();
+function detailStudent(obj){
 	//获取学生的id
-	 $("#studentNo").val(studentNo);
-     $("#name").val(name);
-     $("#sex").val(sex);
-     $("#age").val(age);
-     $("#profession").val(profession);
-	 var id = $(obj).parent().parent().children().eq(0).children().val();
-	  $.ajax({
-			url : 'selectScoreByStudentId',
-			type : 'GET',
-			data : {
-				id : id
-			},
-			 traditional: true,
-			success : function (data) {
-	            //赋值
-	            for (var i = 0; i < data.length; i++) {
-	                var tr = $("<tr>" +
-	                    "<td>"+data.chinese +"</td>" +
-	                    "<td>"+data.math +"</td>" +
-	                    "<td>"+data.english +"</td>" +
-	                    "<td>"+data.art +"</td>" +
-	                    "<td>"+data.music +"</td>" +
-	                    "<td>"+data.history +"</td>" +
-	                    "</td>" +
-	                    "</tr>")
-	                $("#score").append(tr);
-	            }
-	        },
-			error : function (data) {
-				Amin.error("数据异常!")
-	        }
-		})
-	
-	
-	
-	
+    var id = $(obj).parent().parent().children().eq(0).children().val();
+    $.ajax({
+        url : 'selectScoreByStudentId',
+        type : 'GET',
+        data : {
+            id : id
+        },
+        success : function (data) {
+            $("#stuNo").text(data.studentNo);
+            $("#stuName").text(data.name);
+            $("#stuSex").text(formaterSex(data.sex));
+            $("#stuAge").text(data.age);
+            $("#stuProfession").text(data.profession);
+            $("#score tr").remove();
+            var tr = $("<tr>" +
+                "<td class='total'>" + data.chinese + "</td>" +
+                "<td class='total'>" + data.math + "</td>" +
+                "<td class='total'>" + data.english + "</td>" +
+                "<td class='total'>" + data.art + "</td>" +
+                "<td class='total'>" + data.music + "</td>" +
+                "<td class='total'>" + data.history + "</td>" +
+                "<td id='total'></td>" +
+                "</tr>")
+            $("#score").append(tr);
+            $("#total").text(totalScore());
+            $("#editl").css("display", "block");
+            $("#detail").css("display", "block");
+        }
+    })
+}
+function totalScore() {
+    var total ;
+    $(".total").each(function (i,e) {
+        total += parseFloat($(e).text());
+    })
+    return total;
 }
