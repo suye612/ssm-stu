@@ -74,15 +74,6 @@
 	
 	<div id="detail" style="text-align:left;padding-left:50px ;width:420px;height:380px;background:white;position:absolute;left:420px;top:450px;display:none;">
 	<h2 style="background: black;text-align: center;color: white;width: 470px;margin-left: -50px;margin-top: -20px">詳情頁面</h2>
-<<<<<<< HEAD
-	
-	<p >学&emsp;号:<span id="studentNo"></span></p>
-	<p >姓&emsp;名:<span id="name"></span></p>
-	<p >性&emsp;别:<span id="sex"></span></p>
-	<p >年&emsp;龄:<span id="age"></span></p>
-	<p >专&emsp;业:<span id="profession"></span></p>
-	
-=======
 	<p >
         <label>学&emsp;号:</label>
         <span id="stuNo"></span>
@@ -103,7 +94,6 @@
         <label>专&emsp;业:</label>
         <span id="stuProfession"></span>
     </p>
->>>>>>> a7c8cd0a543153364250f0e4ff39c32f313b651d
 	<h4 style="text-align: left;">成績</h4>
 	
 	<table border=1 cellspacing="0" style="width: 400px">
@@ -119,6 +109,8 @@
 	<tbody id="score">
 	</tbody>
 	</table>
+	<br>
+	<input type="button" value="取消" style="color: blue;font-size:20px" onclick="cancel() "/>
 	</div>
 </body>
 
