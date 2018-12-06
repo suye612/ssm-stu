@@ -45,8 +45,10 @@ function getSeleteData() {
  */
 function queryAll(page,pageSize){
     var data = getSeleteData();
-    data.page = page;
-    data.pageSize = pageSize;
+    page = null ? $("#page option:selected").val() : page;
+    pageSize = null ? $("#pageSize option:selected").val() : pageSize;
+    data.page = Number(page);
+    data.pageSize = Number(pageSize);
     //JSON.parse()【从一个字符串中解析出json对象】
     //JSON.stringify()【从一个对象中解析出字符串】
     var formData = JSON.stringify(data);
@@ -57,9 +59,6 @@ function queryAll(page,pageSize){
         contentType: 'application/json',
 		success : function(data){
 			var list = data.list;
-            var maxPage = data.maxPage;
-            $("#maxPage").text(maxPage);
-            var _page = data.page;
 			$("#t1 tr").remove();
             for (var i = 0; i < list.length; i++) {
                 var tr = $("<tr>" +
@@ -76,24 +75,28 @@ function queryAll(page,pageSize){
                     "</tr>")
                 $("#t1").append(tr);
             }
+            var maxPage = data.maxPage;
+            $("#maxPage").text(maxPage);
+            var _page = data.page;
             $("#page").empty();
             for(var i=1;i<= maxPage;i++){
                 if (_page == i) {
-                    $("#page").append("<option value=' " + i + " 'selected>" + i + "</option>");
+                    $("#page").append("<option value=' " + i + " ' selected >" + i + "</option>");
                 } else {
                     $("#page").append("<option value=' " + i + " '>"+ i +"</option>");
                 }
             }
-            $("#pageSize").change(function () {
+            $("#pageSize").unbind().change(function () {
                 refresh();
             });
-            $("#page").change(function () {
+            $("#page").unbind().change(function () {
                 refresh();
             });
             checkboxChecked();
             //为下一页绑定事件
             if (data.isFirstPage == false) {
                 $("#backPage").unbind().click(function () {
+                    var pageSize = $("#pageSize option:selected").val();
                     queryAll(data.backPage, pageSize)
                 });
 
@@ -101,6 +104,7 @@ function queryAll(page,pageSize){
             //为上一页绑定事件
             if (data.isLastPage == false) {
                 $("#nextPage").unbind().click(function () {
+                    var pageSize = $("#pageSize option:selected").val();
                     queryAll(data.nextPage, pageSize)
                 });
             }
@@ -235,7 +239,6 @@ function update(id) {
  */
 function delStudent(obj) {
     var id = $(obj).parent().parent().children().eq(0).children().val();
-    alert(id)
     var ids = [id];
     deleteStudents(ids);
 }
