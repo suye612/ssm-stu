@@ -57,17 +57,11 @@ function queryAll(page,pageSize){
     var formData = JSON.stringify(data);
 	$.ajax({
 		url :"queryAll",
-		type : "get",
-		data :
-		{
-			page : page,
-			pageSize : count,
-            studentModel : formData
-        },
+		type : "post",
+		data :formData,
         dataType:"json",
         contentType: 'application/json',
 		success : function(data){
-			alert(data)
 			var list = data.list;
 			$("#page").val(data.page);//将当前页面存在隐藏域中
 			$("#t1 tr").remove();

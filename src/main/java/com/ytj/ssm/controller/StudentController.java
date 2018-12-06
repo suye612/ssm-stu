@@ -42,12 +42,12 @@ public class StudentController {
 	@RequestMapping(value = "/queryAll",method = RequestMethod.POST)
 	@ResponseBody
 	public PageInfo<StudentModel> queryAll( @RequestBody JSONObject data) {
+		System.out.println(11111);
 		Integer page = data.getInteger("page");
 		Integer pageSize = data.getInteger("pageSize");
 		StudentModel student = JSONObject.toJavaObject(data, StudentModel.class);
 		//查询全部
 		PageInfo<StudentModel>  pageInfo = studentService.queryAll(page,pageSize,student);
-		System.out.println(pageInfo);
 		return 	pageInfo;
 	}
 	/**
