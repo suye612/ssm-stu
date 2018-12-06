@@ -45,8 +45,8 @@ function getSeleteData() {
  */
 function queryAll(page,pageSize){
     var data = getSeleteData();
-    page = null ? $("#page option:selected").val() : page;
-    pageSize = null ? $("#pageSize option:selected").val() : pageSize;
+    page = page == null ? $("#page option:selected").val() : page;
+    pageSize = pageSize == null ? $("#pageSize option:selected").val() : pageSize;
     data.page = Number(page);
     data.pageSize = Number(pageSize);
     //JSON.parse()【从一个字符串中解析出json对象】

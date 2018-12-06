@@ -74,13 +74,13 @@
 	<div id="detail" style="text-align:center; width:200px;height:170px;background:white;position:absolute;left:300px;top:55px;display:none;">
 	<p>
 		<label>学号</label>
-		<input style="width:80px;background:aqua " id="id" readonly="readonly"/>
+		<input style="width:80px;background:aqua " id="stuId" readonly="readonly"/>
 	</p>
-	<p> <label>姓名:</label> <input style="width:80px;" id=name></p>
-	<p> <label>性别:</label> <input style="width:80px;" id="price"></p>
-	<p> <label>年龄:</label> <input style="width:80px;" id="price"></p>
-	<p> <label>专业:</label> <input style="width:80px;" id="price"></p>
-	<p> <label>手机号:</label> <input style="width:80px;" id="price"></p>
+	<p> <label>姓名:</label> <input style="width:80px;" id=stuName></p>
+	<p> <label>性别:</label> <input style="width:80px;" id="stuSex"></p>
+	<p> <label>年龄:</label> <input style="width:80px;" id="stuAge"></p>
+	<p> <label>专业:</label> <input style="width:80px;" id="stuProfession"></p>
+	<p> <label>手机号:</label> <input style="width:80px;" id="stuTel"></p>
 	<br>
 	成绩：
 	<table>
