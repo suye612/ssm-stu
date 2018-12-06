@@ -52,17 +52,10 @@ function queryAll(page,pageSize){
     var formData = JSON.stringify(data);
 	$.ajax({
 		url :"queryAll",
-		type : "get",
-		data :
-		{
-			page : page,
-			pageSize : count,
-            studentModel : formData
-        },
-        dataType:"json",
+		type : "POST",
+		data :formData,
         contentType: 'application/json',
 		success : function(data){
-			alert(data)
 			var list = data.list;
             var maxPage = data.maxPage;
             $("#maxPage").text(maxPage);
