@@ -36,7 +36,7 @@
 <table border=1 cellspacing="0" class="table">
     <thead>
     <tr>
-        <td style="width: 80px"><input  type ="checkbox" id="ids"  onclick="checkAll()"/>全选</td>
+        <td style="width: 80px"><input  type ="checkbox" id="all"  onclick="selectAll()"/>全选</td>
         <td>学号</td>
         <td>姓名</td>
         <td>性别</td>
@@ -48,7 +48,15 @@
     <tbody id="t1"></tbody>
 
 </table>
-<input type="button" value="上一页" id="backPage"/>
+    <label>每页</label>
+    <select id="pageSize">
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="15">15</option>
+    </select>
+    <label>条</label>
+    &emsp;&emsp;&emsp;
+<input type="button" value="上一页" id="backPage"/>&emsp;&emsp;&emsp;
 <input type="button" value="下一页" id="nextPage"/>
 </div>
 <!-- 隐藏域存放当前页数 -->

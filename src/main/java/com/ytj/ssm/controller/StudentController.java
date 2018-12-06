@@ -1,6 +1,8 @@
 package com.ytj.ssm.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -37,12 +39,12 @@ public class StudentController {
 	 * @Param 
 	 * @return 
 	 **/
-	@RequestMapping(value = "/queryAll",method = RequestMethod.GET)
+	@RequestMapping(value = "/queryAll",method = RequestMethod.POST)
 	@ResponseBody
-	public PageInfo<StudentModel> queryAll(@RequestParam(value = "page" ,defaultValue = "1") Integer page,
-										   Integer pageSize,  @RequestBody JSONObject studentModel) {
-		System.out.println(1111);
-		StudentModel student = JSONObject.toJavaObject(studentModel, StudentModel.class);
+	public PageInfo<StudentModel> queryAll( @RequestBody JSONObject data) {
+		Integer page = data.getInteger("page");
+		Integer pageSize = data.getInteger("pageSize");
+		StudentModel student = JSONObject.toJavaObject(data, StudentModel.class);
 		//查询全部
 		PageInfo<StudentModel>  pageInfo = studentService.queryAll(page,pageSize,student);
 		System.out.println(pageInfo);
@@ -104,12 +106,18 @@ public class StudentController {
 	 **/
 	@RequestMapping("/deleteStudent")
 	@ResponseBody
-	public Object deleteStudent(StudentModel studentModel){
-		if (ToolUtil.isOneEmpty(studentModel,studentModel.getId())) {
+	public Object deleteStudent(Integer[] ids){
+		if (ToolUtil.isOneEmpty(ids,ids.length)) {
 			throw new AppException(BizExceptionEnum.REQUEST_ERROR);
 		}
-		studentModel.setStatus(Status.DISABLED);
-		boolean flag = studentService.updateById(studentModel);
+		List<StudentModel> list = new ArrayList<>();
+		for (int i = 0; i < ids.length; i++) {
+			StudentModel studentModel = new StudentModel();
+			studentModel.setId(ids[i]);
+			studentModel.setStatus(Status.DISABLED);
+			list.add(studentModel);
+		}
+		boolean flag = studentService.updateBatchById(list,ids.length);
 		if (flag) {
 			return BizExceptionEnum.SUCCESS_TIP;
 		} else {

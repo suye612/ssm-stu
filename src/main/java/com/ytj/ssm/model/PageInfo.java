@@ -23,13 +23,35 @@ public class PageInfo<T> implements Serializable {
     private List<T> list;
     private List<Integer> nums = new ArrayList<>();
 
+    public Boolean getFirstPage() {
+        if(getPage()==1){
+            return true;
+        }
+        return false;
+    }
+
+    public void setFirstPage(Boolean firstPage) {
+        isFirstPage = firstPage;
+    }
+
+    public Boolean getLastPage() {
+        if(getPage()==getMaxPage()){
+            return true;
+        }
+        return false;
+    }
+
+    public void setLastPage(Boolean lastPage) {
+        isLastPage = lastPage;
+    }
+
     public PageInfo(int maxCount, Integer page) {
         this.maxCount = maxCount;
         this.page = page;
     }
 
     public int getStart() {
-        return (page - 1)*pageSize;
+        return (getPage() - 1)*pageSize;
     }
 
     public void setStart(int start) {
@@ -37,13 +59,13 @@ public class PageInfo<T> implements Serializable {
     }
 
     public int getNextPage() {
-        return page+1;
+        return getPage() +1;
     }
     public void setNextPage(int nextPage) {
         this.nextPage = nextPage;
     }
     public int getBackPage() {
-        return page-1;
+        return getPage() -1;
     }
     public void setBackPage(int backPage) {
         this.backPage = backPage;
@@ -68,7 +90,7 @@ public class PageInfo<T> implements Serializable {
         this.maxCount = maxCount;
     }
     public int getMaxPage() {
-        return maxCount%pageSize == 0 ? maxCount/pageSize :maxCount/pageSize+1;
+        return getMaxCount()%getPageSize() == 0 ? getMaxCount()/getPageSize() :getMaxCount()/getPageSize()+1;
     }
     public void setMaxPage(int maxPage) {
         this.maxPage = maxPage;
@@ -108,7 +130,7 @@ public class PageInfo<T> implements Serializable {
         this.nums = nums;
     }
     public Boolean getIsFirstPage() {
-        if(page==1){
+        if(getPage()==1){
             return true;
         }
         return false;

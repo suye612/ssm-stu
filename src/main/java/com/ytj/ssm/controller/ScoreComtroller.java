@@ -36,9 +36,7 @@ public class ScoreComtroller {
         if (ToolUtil.isEmpty(id)) {
             throw new AppException(BizExceptionEnum.REGISTER_ERROR);
         }
-        Wrapper<ScoreModel> eq = new EntityWrapper<ScoreModel>().eq("", id)
-                                       .and().eq("status", Status.ENABLE);
-        List<ScoreModel> list = scoreService.selectList(eq);
-        return  list;
+        Wrapper<ScoreModel> eq = new EntityWrapper<ScoreModel>().eq("student_id", id);
+        return scoreService.selectOne(eq);
     }
 }

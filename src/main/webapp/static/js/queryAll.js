@@ -1,6 +1,11 @@
 $(function(){
     initData()
 	queryAll(1,5);
+    $("#pageSize").change(function () {
+        var page = $("#page").val();
+        var pageSize = $("#pageSize option:selected").val();
+        queryAll(page,pageSize);
+    })
 })
 
 /**
@@ -20,14 +25,15 @@ function initData() {
  */
 function refresh() {
     var page = $("#page").val();
-    var count  = 5;
-    queryAll(page,count);
+    var pageSize = $("#pageSize option:selected").val();
+    queryAll(page,pageSize);
 }
 
 /**
  * 收集文本框数据
  */
 function getSeleteData() {
+    //创建json对象
 	var studentModel = {};
     studentModel.studentNo = $("#studentNo").val();
     studentModel.name = $("#name").val();
@@ -40,12 +46,12 @@ function getSeleteData() {
 /**
  * 查询全部数据
  * @param page
- * @param count
+ * @param pageSize
  */
-function queryAll(page,count){
-	var page = $("#page").val();
-    count  = 5;
+function queryAll(page,pageSize){
     var data = getSeleteData();
+    data.page = page;
+    data.pageSize = pageSize;
     //JSON.parse()【从一个字符串中解析出json对象】
     //JSON.stringify()【从一个对象中解析出字符串】
     var formData = JSON.stringify(data);
@@ -67,23 +73,54 @@ function queryAll(page,count){
 			$("#t1 tr").remove();
 			for (var i = 0; i < list.length; i++) {
 				var tr = $("<tr>" +
-						"<td><input type='checkbox' name='checkbox' /></td>" +
+						"<td><input type='checkbox' name='ids' value='"+ list[i].id +"'/></td>" +
 						"<td>"+list[i].studentNo +"</td>" +
 						"<td>"+list[i].name +"</td>" +
 						"<td>"+ formaterSex(list[i].sex) +"</td>" +
 						"<td>"+list[i].age +"</td>" +
 						"<td>"+list[i].profession +"</td>" +
-						"<td><input type='button' onclick='delStudent(this)' value='删除' stuId = "+ list[i].id+" >&emsp;" +
-						"<input type='button' onclick='getStudent(this)' value='编辑' stuId = " + list[i].id+ ">&emsp;" +
-						"<input type='button' onclick='detailStuden(this)' value='详情' stuId = "+ list[i].id+">" +
+						"<td><input type='button' onclick='delStudent(this)' value='删除'>&emsp;" +
+						"<input type='button' onclick='getStudent(this)' value='编辑' >&emsp;" +
+						"<input type='button' onclick='detailStuden(this)' value='详情' >" +
 						"</td>" +
 						"</tr>")
 				$("#t1").append(tr);
 			}
+            checkboxChecked();
+            if (data.page != 1) {
+                $("#backPage").unbind().click(function () {
+                    queryAll(data.page-1,pageSize)
+                });
+            }
+           var maxPage =  data.maxCount % data.pageSize == 0 ? data.maxCount / data.pageSize : data.maxCount / data.pageSize +1;
+            if (data.page != maxPage) {
+                $("#nextPage").unbind().click(function () {
+                    queryAll(data.page+1,pageSize)
+                });
+            }
 		}
 	})
 }
+function checkboxChecked() {
+    //绑定选中事件
 
+    $("tbody tr").mouseover(function(){
+        $(this).css("background-color","aqua");
+    });
+    $("tbody tr").mouseout(function(){
+        $(this).css("background-color","white");
+    });
+    $("tbody tr").click(function(){
+        var box = $(this).find("input")[0];
+        if(box.checked){
+            box.checked=false;
+        }else{
+            box.checked=true;
+        }
+        selectOne();
+    });
+
+}
 /**
  * 性别格式化函数
  */
@@ -133,7 +170,7 @@ function save() {
  *获取学生信息 并回填
  */
 function getStudent(obj) {
-	var id = $(obj).attr("stuId");
+    var id = $(obj).parent().parent().children().eq(0).children().val();
 	$.ajax({
 		url : 'getStudent',
 		type : 'GET',
@@ -154,6 +191,7 @@ function getStudent(obj) {
             $("#age").val(data.age);
             $("#profession").val(data.profession);
             $("#add").val("修改")
+
         },
 		error : function (data) {
 			Amin.error("数据异常!")
@@ -190,7 +228,40 @@ function update(id) {
  * 删除学生
  */
 function delStudent(obj) {
-    var id = $(obj).attr("stuId");
+    var id = $(obj).parent().parent().children().eq(0).children().val();
+    alert(id)
+    var ids = [id];
+    deleteStudents(ids);
+}
+function selectAll(){
+    var id_box = $(":checkbox[name='ids']");
+    var all_box = $("#all")[0];
+    $.each(id_box, function(index, box){
+        box.checked = all_box.checked;
+    });
+}
+function selectOne(){
+    var id_box = $(":checkbox[name='ids']");
+    var id_box_checked = $(":checkbox[name='ids']:checked");
+    var all_box = $("#all")[0];
+    all_box.checked = id_box.length==id_box_checked.length;
+
+}
+
+function deleteAll(){
+    var id_box = $(":checkbox[name='ids']:checked");
+    if(id_box.length==0){
+        Amin.alert("请选中一条要删除的数据");
+        return false;
+    }else{
+        var ids = [];
+        $(id_box).each(function (i) {
+            ids[i] = $(this).val();
+        })
+        deleteStudents(ids);
+    }
+}
+function deleteStudents(ids) {
     layer.confirm('您确定要删除么?', {
         btn: ['确定', '取消'],
         title: "提示"
@@ -199,8 +270,9 @@ function delStudent(obj) {
             url : 'deleteStudent',
             type : 'GET',
             data : {
-                id : id
+                ids : ids
             },
+            traditional: true,
             success : function (data) {
                 Amin.success("删除成功!");
                 initData();

@@ -12,10 +12,10 @@
 		<if test="student.profession != null and student.profession !=''">
 			and profession like concat('%',#{student.profession},'%')
 		</if>
-		<if test="student.sex != null ">
+		<if test="student.sex != 0 ">
 			and sex = #{student.sex}
 		</if>
-		<if test="student.age != null ">
+		<if test="student.age != 0 ">
 			and age = #{student.age}
 		</if>
 	</sql>
