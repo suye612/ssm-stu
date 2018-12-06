@@ -47,6 +47,7 @@ public class StudentController {
 		StudentModel student = JSONObject.toJavaObject(data, StudentModel.class);
 		//查询全部
 		PageInfo<StudentModel>  pageInfo = studentService.queryAll(page,pageSize,student);
+		System.out.println(pageInfo);
 		return 	pageInfo;
 	}
 	/**

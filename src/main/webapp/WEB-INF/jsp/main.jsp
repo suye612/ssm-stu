@@ -14,7 +14,7 @@
 <body >
 <div class="main">
     <input type="hidden" id="id" name="id" value="" class="show" />
-  <div class="contend">
+   <div class="contend">
     <label>学号:</label>
     <input type="text" id="studentNo" name="studentNo" value="" class="show" readonly/>
     <label>姓名:</label>
