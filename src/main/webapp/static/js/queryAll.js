@@ -66,7 +66,7 @@ function queryAll(page,pageSize){
                     "<td><input type='checkbox' name='ids' value='"+ list[i].id +"'/></td>" +
                     "<td>"+list[i].studentNo +"</td>" +
                     "<td>"+list[i].name +"</td>" +
-                    "<td>"+ formaterSex(list[i].sex) +"</td>" +
+                    "<td>"+formaterSex(list[i].sex) +"</td>" +
                     "<td>"+list[i].age +"</td>" +
                     "<td>"+list[i].profession +"</td>" +
                     "<td><input type='button' onclick='delStudent(this)' value='删除'>&emsp;" +
@@ -306,10 +306,48 @@ function deleteStudents(ids) {
     })
 }
 //詳情
-function detailStuden(){
+function detailStuden(obj){
 	$("#editl").css("display","block");
 	$("#detail").css("display","block");
-	//获取商品的id
+	var  studentNo = $(obj).parent().parent().children().eq(1).val();
+	alert(studentNo)
+	var  name = $(obj).parent().parent().children().eq(2).val();
+	var  sex = $(obj).parent().parent().children().eq(3).val();
+	var  age = $(obj).parent().parent().children().eq(4).val();
+	var profession = $(obj).parent().parent().children().eq(5).val();
+	//获取学生的id
+	 $("#studentNo").val(studentNo);
+     $("#name").val(name);
+     $("#sex").val(sex);
+     $("#age").val(age);
+     $("#profession").val(profession);
+	 var id = $(obj).parent().parent().children().eq(0).children().val();
+	  $.ajax({
+			url : 'selectScoreByStudentId',
+			type : 'GET',
+			data : {
+				id : id
+			},
+			 traditional: true,
+			success : function (data) {
+	            //赋值
+	            for (var i = 0; i < data.length; i++) {
+	                var tr = $("<tr>" +
+	                    "<td>"+data.chinese +"</td>" +
+	                    "<td>"+data.math +"</td>" +
+	                    "<td>"+data.english +"</td>" +
+	                    "<td>"+data.art +"</td>" +
+	                    "<td>"+data.music +"</td>" +
+	                    "<td>"+data.history +"</td>" +
+	                    "</td>" +
+	                    "</tr>")
+	                $("#score").append(tr);
+	            }
+	        },
+			error : function (data) {
+				Amin.error("数据异常!")
+	        }
+		})
 	
 	
 	
