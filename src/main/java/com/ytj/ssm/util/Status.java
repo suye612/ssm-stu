@@ -16,4 +16,10 @@ public interface Status {
      */
     Integer DISABLED = 2;
 
+    /**
+     * @Description 初始学号
+     **/
+
+    String STUDENT_NO = "0001";
+
 }

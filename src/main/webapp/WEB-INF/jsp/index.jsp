@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>登录</title>
 <%--<base href="<%=request.getContextPath()%>/">--%>
-<link rel="stylesheet" type="text/css" href="static/css/index.css">
+<link rel="stylesheet" type="text/css" href="../../static/css/index.css">
 <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
 <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
 </head>

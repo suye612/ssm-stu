@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,7 +63,7 @@ public class StudentController {
 		studentModel.setStatus(Status.ENABLE);
 		String stuNo = getStudentNo();
 		studentModel.setStudentNo(stuNo);
-		boolean flag = studentService.insert(studentModel);
+		boolean flag = studentService.insertStudent(studentModel);
 		if (flag) {
 			return BizExceptionEnum.SUCCESS_TIP;
 		} else {
@@ -129,8 +131,13 @@ public class StudentController {
 	 * @return 
 	 **/
 	public String getStudentNo(){
-		String stuNo = null;
-		stuNo = DateUtil.formatDate(new Date(), "yyyy");
-		return stuNo;
+		String  stuNo = DateUtil.formatDate(new Date(), "yyyyMM");
+		String backStuNo = studentService.selectLastStudent();
+		if (ToolUtil.isEmpty(backStuNo)) {
+			return stuNo + Status.STUDENT_NO;
+		} else {
+			backStuNo = backStuNo.substring(6);
+			return stuNo + String.format("%04d", (Integer.parseInt(backStuNo)+1));
+		}
 	}
 }

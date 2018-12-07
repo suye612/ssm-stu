@@ -8,4 +8,8 @@ public interface IStudentService extends IService<StudentModel> {
 	public StudentModel studentByName(String name);
 
     PageInfo<StudentModel> queryAll(Integer page, Integer pageSize, StudentModel student);
+
+    String selectLastStudent();
+
+    boolean insertStudent(StudentModel studentModel);
 }
