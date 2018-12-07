@@ -339,7 +339,7 @@ function detailStudent(obj){
     })
 }
 function totalScore() {
-    var total ;
+    var total=0;
     $(".total").each(function (i,e) {
         total += parseFloat($(e).text());
         
