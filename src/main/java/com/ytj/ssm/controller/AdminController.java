@@ -71,7 +71,7 @@ public class AdminController {
 	/**
 	 * 跳转到登录页面
 	 **/
-	@RequestMapping("/")
+	@RequestMapping("/a")
 	public String index() {
 		return "index";
 	}
