@@ -2,6 +2,7 @@ package com.ytj.ssm.controller;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.ytj.ssm.model.Nodes;
 import com.ytj.ssm.model.PyramidModel;
 import com.ytj.ssm.service.IPyramidService;
 import com.ytj.ssm.util.NumUtil;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.tools.Tool;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,118 +38,143 @@ public class PyramidModelController {
 
     @RequestMapping("/selectAllPyramide")
     @ResponseBody
-    public List<PyramidModel> SelectAllPyramide(){
-        List<PyramidModel> list =  pyramidService.selectList(null);
-        for (PyramidModel pyramidModel : list) {
-            Integer pid = pyramidModel.getPid();
-            if (ToolUtil.isEmpty(pid)) {
+    public List<Nodes> SelectAllPyramide(){
 
-            }
-            //为当前对象找到父亲
-            pyramidModel.setParentPyramid(pyramidService.selectById(pid));
-            String cids = pyramidModel.getCids();
-            if (ToolUtil.isEmpty(cids)) {
-
-            }
-            String [] cidss = cids.split(",");
-            if (ToolUtil.isEmpty(cidss)) {
-
-            }
-            List<PyramidModel> childrenPyramid = new ArrayList<>();
-            for (int i=0; i<=cidss.length;i++){
-                cids = cids.substring(1,cidss[i].length());
-                childrenPyramid.add(pyramidService.selectById(Integer.parseInt(cids)));
-            }
+        List<Nodes> nodesTree = pyramidService.selectTree();
+        for (Nodes nodes : nodesTree) {
             //为当前对象找孩子们
-            pyramidModel.setChildrenPyramids(childrenPyramid);
-
+            findChildren(nodes);
         }
-        return  list;
+        return  nodesTree;
     }
-
+    private void findChildren(Nodes nodes){
+        String cids = nodes.getCids();
+        if (ToolUtil.isNotEmpty(cids)) {
+            String [] cidss = cids.split(",");
+            List<Nodes> children = new ArrayList<>();
+            for (int i=0; i<cidss.length;i++){
+                if (ToolUtil.isNotEmpty(cidss[i])) {
+                    cids = cidss[i].substring(1,cidss[i].length()-1);
+                    Nodes child = pyramidService.selectNodesById(Integer.parseInt(cids));
+                    children.add(child);
+                    findChildren(child);
+                }
+            }
+            nodes.setChildren(children);
+        }
+    }
     @RequestMapping("/insertPyramid")
-    public void insertPyramid(PyramidModel pyramidModel,Integer pid){
-        //为该对象设置父亲
-        pyramidModel.setPid(pid);
+    @ResponseBody
+    public String insertPyramid(PyramidModel pyramidModel){
+        pyramidModel.setMembership(10000.00);
         pyramidModel.setStatus(Status.ENABLE);
         pyramidService.insert(pyramidModel);
         //把他父亲查到
-        PyramidModel ParentPyramid =  pyramidService.selectById(pid);
+        PyramidModel parentPyramid =  pyramidService.selectById(pyramidModel.getPid());
         //给让父亲知道自己的孩子们
-        if (ToolUtil.isEmpty(ParentPyramid.getCids())) {
-            ParentPyramid.setCids("[" + pyramidModel.getId() + "]");
-        }else {
-            ParentPyramid.setCids(ParentPyramid.getCids() + ",[" + pyramidModel.getId() + "]");
+        if (ToolUtil.isEmpty(parentPyramid.getCids())) {
+            parentPyramid.setCids("[" + pyramidModel.getId() + "],");
+        } else {
+            parentPyramid.setCids(parentPyramid.getCids() + "[" + pyramidModel.getId() + "],");
         }
+        pyramidService.updateById(parentPyramid);
         //查看自己的兄弟姐妹
-        Wrapper eq = new EntityWrapper<PyramidModel>().eq("pid", pid);
+        Wrapper eq = new EntityWrapper<PyramidModel>().eq("pid", pyramidModel.getPid()).eq("status",Status.ENABLE);
         List<PyramidModel> list = pyramidService.selectList(eq);
         if (list.size() < 5) {
-            //不计算提出
+            //不计算提成
+            return "新增成功!为达到提成标准";
         } else if (list.size() == 5) {
             //开始第一次计算提成
-            //yeye 拿会费的 7%
-            PyramidModel yeye = pyramidModel.getParentPyramid().getParentPyramid();
-            if (ToolUtil.isNotEmpty(yeye)) {
-                Double yongjin_7 = new Double(NumUtil.keep2PointZero(1000 * 0.07)) + yeye.getCommission();
-                yeye.setCommission(yongjin_7*5);
-            }
-            //yeyeye 拿会费的 14%
-            PyramidModel yeyeye = pyramidModel.getParentPyramid().getParentPyramid().getParentPyramid();
-            if (ToolUtil.isNotEmpty(yeyeye)) {
-                Double yongjin_14 = new Double(NumUtil.keep2PointZero(1000 * 0.14)) + yeyeye.getCommission();
-                yeyeye.setCommission(yongjin_14*5);
-            }
-            //yeyeyeye 拿会费的 21%
-            PyramidModel yeyeyeye = pyramidModel.getParentPyramid().getParentPyramid().getParentPyramid().getParentPyramid();
-            if (ToolUtil.isNotEmpty(yeyeyeye)) {
-                Double yongjin_21 = new Double(NumUtil.keep2PointZero(1000 * 0.14)) + yeyeyeye.getCommission();
-                yeyeyeye.setCommission(yongjin_21*5);
-            }
+            return updateCommission(pyramidModel,5,true);
         } else {
             //仅给计算当前对象
-            //yeye 拿会费的 7%
-            PyramidModel yeye = pyramidModel.getParentPyramid().getParentPyramid();
-            if (ToolUtil.isNotEmpty(yeye)) {
-                Double yongjin_7 = new Double(NumUtil.keep2PointZero(1000 * 0.07)) + yeye.getCommission();
-                yeye.setCommission(yongjin_7);
-            }
-            //yeyeye 拿会费的 14%
-            PyramidModel yeyeye = pyramidModel.getParentPyramid().getParentPyramid().getParentPyramid();
-            if (ToolUtil.isNotEmpty(yeyeye)) {
-                Double yongjin_14 = new Double(NumUtil.keep2PointZero(1000 * 0.14)) + yeyeye.getCommission();
-                yeyeye.setCommission(yongjin_14);
-            }
-            //yeyeyeye 拿会费的 21%
-            PyramidModel yeyeyeye = pyramidModel.getParentPyramid().getParentPyramid().getParentPyramid().getParentPyramid();
-            if (ToolUtil.isNotEmpty(yeyeyeye)) {
-                Double yongjin_21 = new Double(NumUtil.keep2PointZero(1000 * 0.14)) + yeyeyeye.getCommission();
-                yeyeyeye.setCommission(yongjin_21);
-            }
+            return updateCommission(pyramidModel,1,true);
         }
-
     }
     @RequestMapping("/deletePyramid")
+    @ResponseBody
     public void deletePyramid(PyramidModel pyramidModel){
         pyramidModel.setStatus(Status.DISABLED);
         pyramidService.updateById(pyramidModel);
+        pyramidModel = pyramidService.selectById(pyramidModel.getId());
         //把他父亲查到
-        PyramidModel ParentPyramid =  pyramidService.selectById(pyramidModel.getPid());
+        PyramidModel parentPyramid =  pyramidService.selectById(pyramidModel.getPid());
         //给让父亲知道自己的孩子们
         //如果父亲为空 则为顶级
-        if (ToolUtil.isEmpty(ParentPyramid)) {
+        if (ToolUtil.isEmpty(parentPyramid)) {
             //ParentPyramid.setCids("[" + pyramidModel.getId() + "]");
         }else {
-            String cids =  ParentPyramid.getCids();
+            String cids =  parentPyramid.getCids();
             //将删除的id从 父亲的孩子中 去除
+                String str = "[" + pyramidModel.getId() + "],";
+                String cid = cids.replace(str, "");
+                parentPyramid.setCids(cid);
+                pyramidService.updateById(parentPyramid);
         }
         //去除后查看自己的兄弟姐妹
-        Wrapper eq = new EntityWrapper<PyramidModel>().eq("pid", pyramidModel.getPid());
+        Wrapper eq = new EntityWrapper<PyramidModel>().eq("pid", pyramidModel.getPid()).eq("status",Status.ENABLE);
         List<PyramidModel> list = pyramidService.selectList(eq);
-        if (list.size() < 5) {
+        if (list.size() == 4) {
             // 退出一个人后 不满足提成条件 重新计算分成 减去5个人的分成
-        } else {
+            updateCommission(pyramidModel,5,false);
+        } else if (list.size() > 4){
             //// 退出一个人后 仍然满足提成条件 重新计算分成 仅减去一个人的分成
+            updateCommission(pyramidModel,1,false);
         }
+    }
+    /**
+     * @Description //TODO
+     * @Param pyramidModel 新入或退出的对象 number 参与计算提成的个数 flag ture 为 新入会 false为退出
+     * @return
+     **/
+    private String updateCommission(PyramidModel pyramidModel,Integer number,Boolean flag){
+        //yeye 拿会费的 7%
+        PyramidModel baba = pyramidService.selectById(pyramidModel.getPid());
+        if (ToolUtil.isEmpty(baba)) {
+            return "新增成功! 该级别没有父级";
+        }
+        PyramidModel yeye = pyramidService.selectById(baba.getPid());
+        if (ToolUtil.isEmpty(yeye)) {
+            return "新增成功! 没有人达到分成条件";
+        }
+        Double yongjin_7  ;
+        if (flag) {
+            double val = pyramidModel.getMembership() * 0.07*number;
+            yongjin_7 = new Double(NumUtil.keep2PointZero(val)) + yeye.getCommission();
+        } else {
+            yongjin_7 =yeye.getCommission() - new Double(NumUtil.keep2PointZero(pyramidModel.getMembership() * 0.07*number)) ;
+        }
+        yeye.setCommission(yongjin_7);
+        pyramidService.updateById(yeye);
+
+        //yeyeye 拿会费的 14%
+        PyramidModel yeyeye = pyramidService.selectById(yeye.getPid());
+        if (ToolUtil.isEmpty(yeyeye)) {
+            return "新增成功! 没有人达到14%的分成条件";
+        }
+        Double yongjin_14 ;
+        if (flag) {
+            yongjin_14 = new Double(NumUtil.keep2PointZero(pyramidModel.getMembership() * 0.14*number)) + yeyeye.getCommission();
+        } else {
+            yongjin_14 =yeyeye.getCommission() - new Double(NumUtil.keep2PointZero(pyramidModel.getMembership() * 0.14*number)) ;
+        }
+        yeyeye.setCommission(yongjin_14);
+        pyramidService.updateById(yeyeye);
+        //yeyeyeye 拿会费的 21%
+        PyramidModel yeyeyeye = pyramidService.selectById(yeyeye.getPid());
+        if (ToolUtil.isEmpty(yeyeyeye)) {
+            return "新增成功! 没有人达到21%的分成条件";
+        }
+        Double yongjin_21 ;
+        if (flag) {
+            yongjin_21 = new Double(NumUtil.keep2PointZero(pyramidModel.getMembership() * 0.21 * number)) + yeyeyeye.getCommission();
+        } else {
+            yongjin_21 =yeyeyeye.getCommission() - new Double(NumUtil.keep2PointZero(pyramidModel.getMembership() * 0.21 * number)) ;
+        }
+        yeyeyeye.setCommission(yongjin_21);
+        pyramidService.updateById(yeyeyeye);
+
+        return "新增成功! 分成已更新成功!";
     }
 }

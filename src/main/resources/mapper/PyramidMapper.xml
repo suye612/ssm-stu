@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ytj.ssm.dao.PyramidModelDao">
+	<select id="selectTree" resultType="com.ytj.ssm.model.Nodes">
+		SELECT
+		id,
+		CONCAT_WS("分成:",name,commission) as name,
+		cids as cids,
+		(
+		CASE
+		WHEN (cids IS NULL) THEN
+		'false'
+		ELSE
+		'true'
+		END
+		) as spread
+		FROM tb_pyramidmodel
+		WHERE `status`= 1 and pid is null
+	</select>
+	<select id="selectNodesById" resultType="com.ytj.ssm.model.Nodes">
+		SELECT
+		id,
+		CONCAT_WS("分成:",name,commission) as name,
+		cids as cids,
+		(
+		CASE
+		WHEN (cids IS NULL) THEN
+		'false'
+		ELSE
+		'true'
+		END
+		) as spread
+		FROM tb_pyramidmodel
+		WHERE `status`= 1
+		and id=#{pid}
+	</select>
+	<update id="updateCidsById">
+		update tb_pyramidmodel set cids = null  where id=#{id}
+	</update>
+</mapper>
