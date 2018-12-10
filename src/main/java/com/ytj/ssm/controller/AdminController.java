@@ -29,6 +29,11 @@ public class AdminController {
 	@Resource
 	private IAdminService adminService;
 	
+	@RequestMapping("/")
+    public String index1() {
+        return "index";
+    }
+	
 	@RequestMapping("/login")
 	//登录
 	public String login(AdminModel admin, HttpServletRequest request) throws IOException {
