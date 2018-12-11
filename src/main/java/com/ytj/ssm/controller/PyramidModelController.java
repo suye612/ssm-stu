@@ -94,10 +94,13 @@ public class PyramidModelController {
     }
     @RequestMapping("/deletePyramid")
     @ResponseBody
-    public void deletePyramid(PyramidModel pyramidModel){
+    public String deletePyramid(PyramidModel pyramidModel){
+        pyramidModel = pyramidService.selectById(pyramidModel.getId());
+        if (ToolUtil.isNotEmpty(pyramidModel.getCids())) {
+            return "无法直接删除父级";
+        }
         pyramidModel.setStatus(Status.DISABLED);
         pyramidService.updateById(pyramidModel);
-        pyramidModel = pyramidService.selectById(pyramidModel.getId());
         //把他父亲查到
         PyramidModel parentPyramid =  pyramidService.selectById(pyramidModel.getPid());
         //给让父亲知道自己的孩子们
@@ -122,6 +125,7 @@ public class PyramidModelController {
             //// 退出一个人后 仍然满足提成条件 重新计算分成 仅减去一个人的分成
             updateCommission(pyramidModel,1,false);
         }
+        return "删除成功";
     }
     /**
      * @Description //TODO
