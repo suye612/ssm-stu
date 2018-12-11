@@ -1,6 +1,6 @@
 $(function(){
-    initData()
-    refresh()
+    initData();
+    refresh();
 })
 
 /**
@@ -89,6 +89,9 @@ function queryAll(page,pageSize){
             }
             $("#pageSize").unbind().change(function () {
                 $("#page option").each(function (i,e) {
+                	//attr() 方法设置或返回被选元素的属性值。
+                	
+                	
                     $(this).attr('selected',false)
                     if ($(e).val() == "1") {
                         $(this).attr('selected','selected');
@@ -102,6 +105,7 @@ function queryAll(page,pageSize){
             checkboxChecked();
             //为上一页绑定事件
             if (data.isFirstPage == false) {
+            	//unbind()事件必须先使用bind()事件后才会生效。
                 $("#backPage").unbind().click(function () {
                     var pageSize = $("#pageSize option:selected").val();
                     queryAll(data.backPage, pageSize)
@@ -201,7 +205,6 @@ function save() {
         return
     }
     var data = getSeleteData();
-    //var formData = JSON.stringify(data);
     var formData = JSON.stringify(data);
     $.ajax({
 		url : 'insertStudent',
@@ -377,7 +380,8 @@ function totalScore() {
     $(".total").each(function (i,e) {
         total += parseFloat($(e).text());
     })
-    return total;
+    return Math.round(total*100)/100
+   // return total;
 }
 function cancel() {
 	 $("#editl").css("display", "none");

@@ -29,6 +29,7 @@ public class AdminController {
 	@Resource
 	private IAdminService adminService;
 	
+	
 	@RequestMapping("/login")
 	//登录
 	public String login(AdminModel admin, HttpServletRequest request) throws IOException {
@@ -71,9 +72,13 @@ public class AdminController {
 	/**
 	 * 跳转到登录页面
 	 **/
-	@RequestMapping("/a")
+	@RequestMapping("/q")
 	public String index() {
 		return "index";
+	}
+	@RequestMapping("/")
+	public String index2() {
+		return "NewFile";
 	}
 	/**
 	 * @return

@@ -14,24 +14,24 @@
 		}
 	</style>
 </head>
-<body>
+<body style="background: url('static/image/green.jpg');background-repeat: no repeat;background-size: cover">
 <div class="div2">
 <h2 class="title">注册</h2>
 	<form action="reg" method="post" onsubmit="return checkData()">
 		<p class="p">
 			姓&emsp;&ensp;&ensp;名：
-			<input type="text" id="name" name="username" placeholder="请输入姓名" class="aa">
+			<input type="text" id="name" name="username" placeholder="请输入姓名" class="aa"><br>
 			<span id="name_msg" class="msg"></span>
 		</p>
 
 		<p>
 		手机&emsp;号：
-		<input type="text" id="tel" name="tel" placeholder="请输入手机号" class="aa">
+		<input type="text" id="tel" name="tel" placeholder="请输入手机号" class="aa" ><br>
 			<span id="tel_msg" class="msg"></span>
 		</p>
 		<p>
 		身份证号：
-		<input type="text" id="idcard" name="idcard" placeholder="请输入身份证号" class="aa">
+		<input type="text" id="idcard" name="idcard" placeholder="请输入身份证号" class="aa"><br>
 			<span id="idcard_msg" class="msg"></span>
 		</p>
 		<p class="sex">	性&emsp;别&emsp;：&emsp;

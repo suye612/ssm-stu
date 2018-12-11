@@ -6,11 +6,11 @@
 <meta charset="UTF-8">
 <title>登录</title>
 <%--<base href="<%=request.getContextPath()%>/">--%>
-<link rel="stylesheet" type="text/css" href="../../static/css/index.css">
+<link rel="stylesheet" type="text/css" href="static/css/index.css">
 <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
 <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
 </head>
-<body>
+<body style="background: url('static/image/green.jpg');background-repeat: no repeat;background-size: cover">
 <div class="div">
 <h2 class="title">登录</h2>
 	<form action="login" method="post" >
