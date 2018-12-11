@@ -31,10 +31,10 @@ public class PyramidModelController {
     /**
      * 跳转到登录页面
      **/
-    /*@RequestMapping("/")
+   @RequestMapping("/a")
     public String index() {
         return "index1";
-    }*/
+    }
 
     @RequestMapping("/selectAllPyramide")
     @ResponseBody

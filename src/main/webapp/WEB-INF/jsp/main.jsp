@@ -31,7 +31,7 @@
 	        <option value="2">女</option>
 	    </select>
 	    <label>年龄:</label>
-	    <input type="number" id="age" name="age" min="0" value="" class="show"  required/>
+	    <input type="number" id="age" name="age" min="0" value="" class="show" max="120" required/>
 	    <label>专业:</label>
 	    <input type="text" id="profession" name="profession" value="" class="show"  required />&ensp;
 	    <input type="button" onclick="queryAll()" value="查询" id="query"/>&ensp;

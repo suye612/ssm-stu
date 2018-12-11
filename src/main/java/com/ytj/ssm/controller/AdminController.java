@@ -29,10 +29,6 @@ public class AdminController {
 	@Resource
 	private IAdminService adminService;
 	
-	@RequestMapping("/")
-    public String index1() {
-        return "index";
-    }
 	
 	@RequestMapping("/login")
 	//登录
@@ -76,9 +72,13 @@ public class AdminController {
 	/**
 	 * 跳转到登录页面
 	 **/
-	@RequestMapping("/a")
+	@RequestMapping("/q")
 	public String index() {
 		return "index";
+	}
+	@RequestMapping("/")
+	public String index2() {
+		return "NewFile";
 	}
 	/**
 	 * @return
