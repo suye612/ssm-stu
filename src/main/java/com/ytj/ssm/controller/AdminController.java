@@ -72,11 +72,11 @@ public class AdminController {
 	/**
 	 * 跳转到登录页面
 	 **/
-	@RequestMapping("/q")
+	@RequestMapping("/")
 	public String index() {
 		return "index";
 	}
-	@RequestMapping("/")
+	@RequestMapping("/o")
 	public String index2() {
 		return "NewFile";
 	}
@@ -88,6 +88,7 @@ public class AdminController {
 	@RequestMapping("/admin/checkTel")
 	@ResponseBody
 	public Object checkTel(String tel) {
+		System.out.println(1111+"tel");
 		Wrapper<AdminModel> eq = new EntityWrapper<AdminModel>().eq("tel", tel);
 		return adminService.selectList(eq);
 	}
@@ -99,6 +100,7 @@ public class AdminController {
 	@RequestMapping("/admin/checkName")
 	@ResponseBody
 	public Object checkName(String name) {
+		System.out.println(1111+"name");
 		Wrapper<AdminModel> eq = new EntityWrapper<AdminModel>().eq("username", name);
 		List<AdminModel> list = adminService.selectList(eq);
 		return list;
@@ -111,6 +113,7 @@ public class AdminController {
 	@RequestMapping("/admin/checkIdcard")
 	@ResponseBody
 	public Object checkIdcard(String idcard) {
+		System.out.println(1111+"idcard");
 		Wrapper<AdminModel> eq = new EntityWrapper<AdminModel>().eq("idcard", idcard);
 		return adminService.selectList(eq);
 	}

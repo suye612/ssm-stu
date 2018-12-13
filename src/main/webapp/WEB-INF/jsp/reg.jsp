@@ -45,36 +45,40 @@
 </div>
 </body>
 <script>
-	var flag = false;
 	$(function () {
 	    //验证姓名是否合法
 		$("#name").blur(function () {
 			var name = $("#name").val();
 			//验证是否为空
-            flag = isNameNull(name);
+			var a = false;
+            a = isNameNull(name);
         })
 		//验证 手机号是否合法
         $("#tel").blur(function () {
             var tel = $("#tel").val();
             //验证是否为空
-            flag = isTelNull(tel);
+            var b = false;
+            b = isTelNull(tel);
         })
 		//验证身份证号是否合法
         $("#idcard").blur(function () {
             var idcard = $("#idcard").val();
             //验证是否为空
-            flag = isIdCardNull(idcard);
+             var c = false;
+            c = isIdCardNull(idcard);
         })
     })
 	function isNameNull(name) {
         $("#name_msg").text('')
-        if (name == null || name == '') {
-            $("#name_msg").text('姓名不能为空!')
+        var m=/^[^ ]+$/;
+        if (name == null || name == ''||m.test(name)==false) {
+            $("#name_msg").text('姓名不能为空!or不能输入空格')
             return false;
         } else {
             //验证是否已存在
             $.ajax({
-                url : '/admin/checkName',
+                url : 'admin/checkName',
+                async:false,
                 data : {
                     name : name
                 },
@@ -82,14 +86,17 @@
                 success : function (data) {
                     if (data != null && data.length > 0) {
                         $("#name_msg").text('用户名已存在!')
-                        return false;
+                        a=false;
+                        return a;
                     } else {
                         $("#name_msg").css('color','green')
                         $("#name_msg").text('√')
-                        return true;
+                         a=true;
+                        return a;
                     }
                 }
             })
+           return a;
 
         }
     }
@@ -106,7 +113,8 @@
             } else {
 				//验证是否已存在
                 $.ajax({
-                    url : '/admin/checkTel',
+                    url : 'admin/checkTel',
+                    async:false,
                     data : {
                         tel : tel
                     },
@@ -114,15 +122,17 @@
                     success : function (data) {
                         if (data != null && data.length > 0) {
                             $("#tel_msg").text('手机号已经被注册!')
-                            return false;
+                            b=false;
+                            return b;
                         } else {
                             $("#tel_msg").css('color','green')
                             $("#tel_msg").text('√')
-                            return true;
+                            b=true;
+                            return b;
                         }
                     }
                 })
-                return true
+                return b;
             }
         }
 
@@ -140,7 +150,8 @@
             } else {
                 //验证是否已存在
                 $.ajax({
-                    url : '/admin/checkIdcard',
+                    url : 'admin/checkIdcard',
+                    async:false,
                     data : {
                         idcard : idcard
                     },
@@ -148,20 +159,26 @@
                     success : function (data) {
                         if (data != null && data.length > 0) {
                             $("#idcard_msg").text("身份证号已经被注册!")
-                            return false;
+                             c=false;
+                             return c;
                         } else {
                             $("#idcard_msg").css('color','green')
                             $("#idcard_msg").text('√')
-                            return true;
+                             c=true;
+                            return c;
                         }
                     }
                 })
-                return true
+                return c;
             }
         }
     }
     function checkData() {
-		return flag;
-    }
+	if (a == false || b == false || c == false) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 </script>
 </html>

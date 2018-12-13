@@ -63,7 +63,7 @@ function queryAll(page,pageSize){
 			$("#t1 tr").remove();
             for (var i = 0; i < list.length; i++) {
                 var tr = $("<tr>" +
-                    "<td><input type='checkbox' name='ids' value='"+ list[i].id +"'/></td>" +
+                    "<td><input type='checkbox' name='ids' value='"+ list[i].id +"' /></td>" +
                     "<td>"+list[i].studentNo +"</td>" +
                     "<td>"+list[i].name +"</td>" +
                     "<td>"+formaterSex(list[i].sex) +"</td>" +
@@ -90,8 +90,6 @@ function queryAll(page,pageSize){
             $("#pageSize").unbind().change(function () {
                 $("#page option").each(function (i,e) {
                 	//attr() 方法设置或返回被选元素的属性值。
-                	
-                	
                     $(this).attr('selected',false)
                     if ($(e).val() == "1") {
                         $(this).attr('selected','selected');
@@ -135,6 +133,9 @@ function checkboxChecked() {
     $("tbody tr").mouseout(function(){
         $(this).css("background-color","white");
     });
+    $("input[type='checkbox']").click(function(e){
+    	e.stopPropagation(); 
+    });
     $("tbody tr").click(function(){
         var box = $(this).find("input")[0];
         if(box.checked){
@@ -146,6 +147,7 @@ function checkboxChecked() {
     });
 
 }
+
 /**
  * 性别格式化函数
  */
@@ -183,8 +185,12 @@ function validateFeeling() {
         Amin.error("姓名不能为空!")
         return false
     }
-    if (age == null || age == '') {
+    if (age == null ||  age== '') {
         Amin.error("年龄不能为空!")
+        return false
+    }
+    if (age >120) {
+        Amin.error("年龄小於120!")
         return false
     }
     if (profession == null || profession == '') {
@@ -316,7 +322,8 @@ function deleteAll(){
             ids[i] = $(this).val();
         })
         deleteStudents(ids);
-        $("#all")[0].attr('checked', false);
+        $("#all").prop("checked",false);
+       // $("#all").attr("checked", false);
     }
 }
 function deleteStudents(ids) {
